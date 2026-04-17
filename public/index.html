@@ -222,7 +222,7 @@ body.screen-mode #s-screen{display:flex;}
   <div class="logo-badge">STT PUBDAY ／ SOCIAL PROBLEM SOLVING GAME</div>
 
   <h1 class="draw-title">未来の社会課題<br><span class="y">先行解決</span><span class="b">ゲーム</span></h1>
-  <p class="draw-sub">3枚のカードを引いて、チームでガジェットを考えよう</p>
+  <p class="draw-sub">3枚のカードを引いて、チームでお悩み解決グッズを考えよう</p>
   <div class="team-input-wrap">
     <span class="team-label">チーム名</span>
     <input class="team-name" id="team-name" type="text" placeholder="例：チームA">
@@ -258,13 +258,13 @@ body.screen-mode #s-screen{display:flex;}
 <div class="screen" id="s-input">
   <div class="scenario-bar" id="scenario-bar"></div>
   <div class="input-head">
-    <h2>💡 チームのガジェットアイデアを入力</h2>
+    <h2>💡 チームのお悩み解決グッズアイデアを入力</h2>
     <p>名前と説明を入力するとNano BananaがAIイラストを生成します（1チーム3回まで）</p>
   </div>
   <div class="input-wrap">
-    <div class="field-label">ガジェット名</div>
+    <div class="field-label">お悩み解決グッズ名</div>
     <input class="txt" id="gadget-name" type="text" placeholder="例：感情可視化バスシート">
-    <div class="field-label">どんなガジェット？（見た目・しくみ・使い方）</div>
+    <div class="field-label">どんなお悩み解決グッズ？（見た目・しくみ・使い方）</div>
     <textarea class="txt" id="gadget-desc" placeholder="例：バスの座席に内蔵されたセンサーが乗客の体温と心拍を計測。シートが色で感情状態を表示する。"></textarea>
   </div>
   <div class="input-btns">
@@ -275,7 +275,7 @@ body.screen-mode #s-screen{display:flex;}
 
 <!-- SCREEN 3: REVEAL -->
 <div class="screen" id="s-reveal">
-  <div class="reveal-badge">GADGET CARD GENERATED ✦</div>
+  <div class="reveal-badge">グッズ カード 生成完了 ✦</div>
   <div class="reveal-team" id="reveal-team"></div>
   <div class="reveal-gadget-name" id="reveal-name">—</div>
   <div class="reveal-pills" id="reveal-pills"></div>
@@ -295,7 +295,7 @@ body.screen-mode #s-screen{display:flex;}
 <!-- SCREEN 4: GALLERY -->
 <div class="screen" id="s-gallery">
   <div class="gallery-header">
-    <h2>全班の<span>ガジェット</span>一覧 🎨</h2>
+    <h2>全班の<span>お悩み解決グッズ</span>一覧 🎨</h2>
     <p id="gallery-session-label" style="font-family:'DotGothic16',monospace;font-size:10px;letter-spacing:2px;color:var(--c4);margin-bottom:4px;"></p>
     <p id="gallery-count">読み込み中...</p>
   </div>
@@ -312,7 +312,7 @@ body.screen-mode #s-screen{display:flex;}
 <div id="s-screen">
   <div class="screen-header">
     <div style="display:flex;align-items:center;gap:12px;">
-      <div class="screen-title">✦ STT PUBDAY — 先行解決ガジェット一覧</div>
+      <div class="screen-title">✦ STT PUBDAY — お悩み解決グッズ一覧</div>
       <div class="screen-session-label" id="screen-session-label" onclick="openSessionModal()">読み込み中...</div>
     </div>
     <div style="display:flex;align-items:center;gap:12px;">
@@ -322,7 +322,7 @@ body.screen-mode #s-screen{display:flex;}
     </div>
   </div>
   <div class="screen-grid" id="screen-grid">
-    <div class="gallery-empty" style="color:#1a1a2e">チームのガジェットを待っています...</div>
+    <div class="gallery-empty" style="color:#1a1a2e">チームのお悩み解決グッズを待っています...</div>
   </div>
 </div>
 
@@ -571,7 +571,7 @@ function goToInput(){
 async function generateCard(){
   const name = document.getElementById('gadget-name').value.trim();
   const desc = document.getElementById('gadget-desc').value.trim();
-  if(!name){ alert('ガジェット名を入力してください'); return; }
+  if(!name){ alert('お悩み解決グッズ名を入力してください'); return; }
   const team = document.getElementById('team-name').value.trim()||'未設定';
 
   const cnt = await getCount(team);
@@ -591,9 +591,9 @@ async function generateCard(){
   document.getElementById('btn-save').disabled = true;
   currentImgB64 = '';
 
-  const prompt = `未来のガジェットのプロダクトビジュアルを1枚描いてください。画面を左右2分割にしてください。
+  const prompt = `未来のお悩み解決グッズのプロダクトビジュアルを1枚描いてください。画面を左右2分割にしてください。
 
-ガジェット名: ${name}
+お悩み解決グッズ名: ${name}
 説明: ${desc||'なし'}
 使う場所: ${current.place}
 使う人: ${current.person}
@@ -602,22 +602,22 @@ async function generateCard(){
 レイアウト（左右2分割）:
 
 【左半分】プロダクトビジュアル
-- ガジェット本体を大きく、余白たっぷりに描く
+- お悩み解決グッズ本体を大きく、余白たっぷりに描く
 - 質感・光沢・影・素材感をリアルに描写（金属・ガラス・シリコンなど）
 - テキスト・ラベル・引き出し線・スペック表記は一切入れない
-- ガジェット単体の美しさを引き立てるシンプルな構図
+- お悩み解決グッズ単体の美しさを引き立てるシンプルな構図
 
 【右半分】実際の使用シーン
-- 「${current.person}」が「${current.place}」でガジェットを使っているシーンを描く
+- 「${current.person}」が「${current.place}」でお悩み解決グッズを使っているシーンを描く
 - プロダクトカタログ風のシンプルなライン画スタイル
-- ガジェットが「${current.issue}」を解決している瞬間を表現
+- お悩み解決グッズが「${current.issue}」を解決している瞬間を表現
 - テキスト・吹き出し・説明文は一切入れない。絵だけで伝える
 
 全体スタイル:
 - 純白の背景、清潔感・余白を大切に
 - AppleやMujiのカタログ風、洗練されたミニマルデザイン
 - モノクロベース＋アクセントカラー1色
-- 文字・テキスト・ラベル・タイトル・ガジェット名は画像内に一切入れない
+- 文字・テキスト・ラベル・タイトル・お悩み解決グッズ名は画像内に一切入れない
 - かわいい装飾・星・doodle要素は一切使わない`;
 
   try{
@@ -706,9 +706,9 @@ function renderGallery(){
   galleryUnsubscribe = window._dbOnValue(dbRef(DB_GADGETS()), snap=>{
     const data = snap.val()||{};
     const list = Object.values(data).sort((a,b)=>b.ts-a.ts);
-    count.textContent=`${list.length}件のガジェットが登録されています 🎨`;
+    count.textContent=`${list.length}件のお悩み解決グッズが登録されています 🎨`;
     if(!list.length){
-      grid.innerHTML='<div class="gallery-empty">まだガジェットがありません。<br>各チームでカードを作成してください！</div>';
+      grid.innerHTML='<div class="gallery-empty">まだお悩み解決グッズがありません。<br>各チームでカードを作成してください！</div>';
       return;
     }
     grid.innerHTML=list.map(g=>`
@@ -739,9 +739,9 @@ function startScreenMode(){
   screenUnsubscribe = window._dbOnValue(dbRef(DB_GADGETS()), snap=>{
     const data = snap.val()||{};
     const list = Object.values(data).sort((a,b)=>b.ts-a.ts);
-    count.textContent=`${list.length} GADGETS`;
+    count.textContent=`${list.length} グッズ`;
     if(!list.length){
-      grid.innerHTML='<div class="gallery-empty" style="color:#1a1a2e">チームのガジェットを待っています...</div>';
+      grid.innerHTML='<div class="gallery-empty" style="color:#1a1a2e">チームのお悩み解決グッズを待っています...</div>';
       return;
     }
     grid.innerHTML=list.map(g=>`
@@ -858,7 +858,7 @@ async function createSession(){
 
 async function resetCurrentSession(){
   const label = document.getElementById('screen-session-label')?.textContent?.replace('📁 ','') || '現在のセッション';
-  if(!confirm(`⚠️ 「${label}」のガジェットデータをリセットします。\nセッション自体は残ります。よろしいですか？`)) return;
+  if(!confirm(`⚠️ 「${label}」のお悩み解決グッズデータをリセットします。\nセッション自体は残ります。よろしいですか？`)) return;
   try{
     await window._dbSet(dbRef(DB_GADGETS()), null);
     await window._dbSet(dbRef(DB_COUNTERS()), null);
