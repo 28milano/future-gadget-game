@@ -84,7 +84,8 @@ input.team-name:-webkit-autofill:focus{
 @keyframes flipIn{from{transform:rotateY(80deg);opacity:0}to{transform:rotateY(0);opacity:1}}
 .card.drawn .card-val{animation:flipIn .4s ease both;}
 .draw-btns{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center;}
-#btn-proceed{display:none;}#btn-proceed.show{display:inline-block;}
+#btn-proceed{display:none;text-align:center;}#btn-proceed.show{display:flex;flex-direction:column;align-items:center;gap:10px;}
+.draw-hint{font-size:13px;color:var(--c1);opacity:.85;letter-spacing:.5px;}
 
 /* ── BUTTONS ── */
 .btn-primary{font-family:'Noto Sans JP',sans-serif;font-size:15px;font-weight:700;padding:12px 44px;border-radius:60px;border:2px solid var(--c3);background:transparent;color:var(--c3);cursor:pointer;letter-spacing:1.5px;transition:all .2s;position:relative;overflow:hidden;}
@@ -222,7 +223,7 @@ body.screen-mode #s-screen{display:flex;}
   <div class="logo-badge">STT PUBDAY ／ SOCIAL PROBLEM SOLVING GAME</div>
 
   <h1 class="draw-title">未来の社会課題<br><span class="y">先行解決</span><span class="b">ゲーム</span></h1>
-  <p class="draw-sub">3枚のカードを引いて、チームでお悩み解決グッズを考えよう</p>
+  <p class="draw-sub">引いた3枚のカードが、あなたのお題。このシーンを救うグッズを考えよう！</p>
   <div class="team-input-wrap">
     <span class="team-label">チーム名</span>
     <input class="team-name" id="team-name" type="text" placeholder="例：チームA">
@@ -249,7 +250,8 @@ body.screen-mode #s-screen{display:flex;}
     <button class="btn-primary" id="btn-draw" onclick="drawCards()"><span>🃏 カードを引く</span></button>
     <button class="btn-ghost" onclick="resetDraw()">引き直す</button>
     <div id="btn-proceed">
-      <button class="btn-cyan" onclick="goToInput()"><span>✏️ アイデアを入力する →</span></button>
+      <p class="draw-hint">↑ この3つの組み合わせで困っている人を救うグッズを考えよう！</p>
+      <button class="btn-cyan" onclick="goToInput()"><span>💡 このシーンのお悩み解決グッズを考える →</span></button>
     </div>
   </div>
 </div>
