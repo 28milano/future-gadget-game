@@ -409,6 +409,31 @@ function onFirebaseReady(){
 }
 
 async function initTeamMode(){
+  // チーム名入力リスナーは一度だけ登録
+  document.getElementById('team-name').addEventListener('input', e => updateLimitBadge(e.target.value.trim()));
+
+  // 管理側のアクティブセッションをリアルタイムで監視・追従
+  window._dbOnValue(dbRef('config/active_session'), snap => {
+    if(snap.exists() && snap.val()?.id){
+      const {id, name} = snap.val();
+      if(currentSession === id) return; // 変化なければスキップ
+      currentSession = id;
+      const galleryLabel = document.getElementById('gallery-session-label');
+      if(galleryLabel) galleryLabel.textContent = 'SESSION: ' + name;
+      const drawLabel = document.getElementById('draw-session-label');
+      if(drawLabel){ drawLabel.textContent = 'SESSION: ' + name; drawLabel.style.display='inline-block'; }
+      updateLimitBadge(document.getElementById('team-name')?.value.trim() || '');
+      // ギャラリーを表示中なら即座に再レンダリング
+      if(document.getElementById('s-gallery').classList.contains('active')) renderGallery();
+    } else {
+      // active_sessionが未設定ならセッション一覧の最新を使用（フォールバック）
+      initTeamSessionFallback();
+    }
+  });
+}
+
+async function initTeamSessionFallback(){
+  if(currentSession) return; // すでにセッション確定済みならスキップ
   const sessSnap = await window._dbGet(dbRef(DB_SESSIONS)).catch(()=>null);
   const data = sessSnap?.val()||{};
   const sessions = Object.entries(data)
@@ -421,7 +446,6 @@ async function initTeamMode(){
   const drawLabel = document.getElementById('draw-session-label');
   if(drawLabel){ drawLabel.textContent = 'SESSION: ' + sessName; drawLabel.style.display='inline-block'; }
   updateLimitBadge('');
-  document.getElementById('team-name').addEventListener('input', e => updateLimitBadge(e.target.value.trim()));
 }
 
 if(window._firebaseReady) onFirebaseReady();
@@ -768,6 +792,10 @@ function switchSession(id, name){
   if(galleryLabel) galleryLabel.textContent = 'SESSION: ' + name;
   // リスナー再起動
   startScreenMode();
+  // 管理側のみ: アクティブセッションをFirebaseに保存してチーム側に伝達
+  if(isScreen){
+    window._dbSet(dbRef('config/active_session'), {id, name}).catch(()=>{});
+  }
 }
 
 function openSessionModal(){
