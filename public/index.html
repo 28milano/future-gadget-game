@@ -58,6 +58,15 @@ body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(
 input.team-name{background:var(--card-bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'Noto Sans JP',sans-serif;font-size:16px;font-weight:700;padding:9px 16px;outline:none;width:180px;transition:border-color .2s;}
 input.team-name:focus{border-color:var(--c4);}
 input.team-name::placeholder{color:var(--muted);font-weight:400;}
+input.team-name:-webkit-autofill,
+input.team-name:-webkit-autofill:hover,
+input.team-name:-webkit-autofill:focus{
+  -webkit-box-shadow:0 0 0px 1000px var(--card-bg) inset;
+  -webkit-text-fill-color:var(--text);
+  caret-color:var(--text);
+  border-color:var(--c4);
+  transition:background-color 9999s ease-in-out 0s;
+}
 .limit-badge{font-family:'DotGothic16',monospace;font-size:10px;letter-spacing:2px;color:var(--c4);background:rgba(162,89,255,.1);border:1px solid rgba(162,89,255,.3);padding:4px 16px;border-radius:20px;margin-bottom:20px;}
 .limit-badge.warn{color:var(--c2);background:rgba(255,75,110,.1);border-color:rgba(255,75,110,.3);}
 .card-row{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;width:100%;max-width:1200px;margin-bottom:24px;}
