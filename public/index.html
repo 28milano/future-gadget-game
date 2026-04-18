@@ -47,6 +47,26 @@ body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(
 .screen.active{display:flex;animation:fadeIn .35s ease;}
 @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 
+/* ── ENTRY ── */
+#s-entry{background:var(--bg);gap:0;}
+.entry-eyebrow{font-family:'DotGothic16',monospace;font-size:10px;letter-spacing:4px;color:var(--c1);border:1px solid rgba(0,229,255,.3);padding:5px 18px;margin-bottom:36px;text-transform:uppercase;text-align:center;}
+.entry-title{font-size:clamp(28px,6vw,56px);font-weight:900;letter-spacing:-2px;line-height:1.05;text-align:center;margin-bottom:14px;}
+.entry-title .y{color:var(--c3);}.entry-title .b{color:var(--c1);}
+.entry-sub{color:rgba(238,238,248,0.65);font-size:14px;letter-spacing:0.5px;text-align:center;margin-bottom:48px;line-height:1.8;max-width:420px;}
+.entry-input-area{width:100%;max-width:440px;display:flex;flex-direction:column;gap:10px;margin-bottom:24px;}
+.entry-input-label{font-family:'DotGothic16',monospace;font-size:11px;letter-spacing:3px;color:var(--c4);text-transform:uppercase;}
+input.entry-team-name{background:var(--card-bg);border:2px solid var(--border);border-radius:10px;color:var(--text);font-family:'Noto Sans JP',sans-serif;font-size:22px;font-weight:900;padding:14px 20px;outline:none;width:100%;transition:border-color .2s;}
+input.entry-team-name:focus{border-color:var(--c4);}
+input.entry-team-name::placeholder{color:var(--muted);font-weight:400;font-size:16px;}
+input.entry-team-name:-webkit-autofill,input.entry-team-name:-webkit-autofill:hover,input.entry-team-name:-webkit-autofill:focus{-webkit-box-shadow:0 0 0px 1000px var(--card-bg) inset;-webkit-text-fill-color:var(--text);caret-color:var(--text);border-color:var(--c4);transition:background-color 9999s ease-in-out 0s;}
+.btn-start{font-family:'Noto Sans JP',sans-serif;font-size:18px;font-weight:900;padding:16px 0;border-radius:60px;border:2px solid var(--c3);background:transparent;color:var(--c3);cursor:pointer;letter-spacing:2px;transition:all .2s;position:relative;overflow:hidden;width:100%;max-width:440px;}
+.btn-start::before{content:'';position:absolute;inset:0;background:var(--c3);transform:scaleX(0);transform-origin:left;transition:transform .25s;z-index:0;}
+.btn-start:hover::before,.btn-start:active::before{transform:scaleX(1);}
+.btn-start:hover,.btn-start:active{color:#000;}
+.btn-start span{position:relative;z-index:1;}
+.draw-team-indicator{font-family:'DotGothic16',monospace;font-size:10px;letter-spacing:2px;color:var(--c4);background:rgba(162,89,255,.1);border:1px solid rgba(162,89,255,.3);padding:4px 14px;border-radius:20px;margin-bottom:14px;display:none;}
+.draw-team-indicator.show{display:inline-block;}
+
 /* ── DRAW ── */
 #s-draw{background:var(--bg);}
 .logo-badge{font-family:'DotGothic16',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--c1);border:1px solid rgba(0,229,255,0.35);padding:5px 16px;margin-bottom:16px;}
@@ -217,6 +237,12 @@ body.screen-mode #s-screen{display:flex;}
   /* 全体 */
   .screen{padding:20px 16px;}
 
+  /* エントリー画面 */
+  .entry-eyebrow{margin-bottom:24px;}
+  .entry-sub{margin-bottom:32px;font-size:13px;}
+  input.entry-team-name{font-size:18px;padding:12px 16px;}
+  .btn-start{font-size:16px;}
+
   /* トップバッジ非表示 */
   .logo-badge{display:none;}
 
@@ -255,16 +281,22 @@ body.screen-mode #s-screen{display:flex;}
 </head>
 <body>
 
-<!-- SCREEN 1: DRAW -->
-<div class="screen active" id="s-draw">
-  <div class="logo-badge">STT PUBDAY ／ SOCIAL PROBLEM SOLVING GAME</div>
-
-  <h1 class="draw-title">未来の社会課題<br><span class="y">先行解決</span><span class="b">ゲーム</span></h1>
-  <p class="draw-sub">引いた3枚のカードが、あなたのお題。このシーンを救うグッズを考えよう！</p>
-  <div class="team-input-wrap">
-    <span class="team-label">チーム名</span>
-    <input class="team-name" id="team-name" type="text" placeholder="例：チームA">
+<!-- SCREEN 0: ENTRY -->
+<div class="screen active" id="s-entry">
+  <div class="entry-eyebrow">STT PUBDAY 2026 ／ SOCIAL PROBLEM SOLVING GAME</div>
+  <h1 class="entry-title">未来の社会課題<br><span class="y">先行解決</span><span class="b">ゲーム</span></h1>
+  <p class="entry-sub">3枚のカードが示すシーンを想像して、<br>お悩みを解決するグッズを考えよう！</p>
+  <div class="entry-input-area">
+    <div class="entry-input-label">チーム名</div>
+    <input class="entry-team-name" id="team-name" type="text" placeholder="例：チームA" autocomplete="off">
   </div>
+  <button class="btn-start" onclick="startGame()"><span>▶ ゲームスタート</span></button>
+</div>
+
+<!-- SCREEN 1: DRAW -->
+<div class="screen" id="s-draw">
+  <div class="logo-badge">STT PUBDAY ／ SOCIAL PROBLEM SOLVING GAME</div>
+  <div class="draw-team-indicator" id="draw-team-indicator"></div>
   <div class="limit-badge" id="limit-badge">チーム名を入力してください</div>
   <div class="card-row">
     <div class="card place" id="card-place">
@@ -288,6 +320,7 @@ body.screen-mode #s-screen{display:flex;}
   <div class="draw-btns">
     <button class="btn-primary" id="btn-draw" onclick="drawCards()"><span>🃏 カードを引く</span></button>
     <button class="btn-ghost" onclick="resetDraw()">✕ クリア</button>
+    <button class="btn-ghost" onclick="goTo('s-entry')">← チームを変更</button>
     <div id="btn-proceed">
       <button class="btn-cyan" onclick="goToInput()"><span>💡 このシーンのお悩み解決グッズを考える →</span></button>
     </div>
@@ -459,7 +492,8 @@ function onFirebaseReady(){
 
 async function initTeamMode(){
   // チーム名入力リスナーは一度だけ登録
-  document.getElementById('team-name').addEventListener('input', e => updateLimitBadge(e.target.value.trim()));
+  const tn = document.getElementById('team-name');
+  tn.addEventListener('keydown', e => { if(e.key==='Enter') startGame(); });
 
   // 管理側のアクティブセッションをリアルタイムで監視・追従
   window._dbOnValue(dbRef('config/active_session'), snap => {
@@ -589,11 +623,32 @@ function resetDraw(){
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // NAVIGATION
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+function startGame(){
+  const input = document.getElementById('team-name');
+  const team = input.value.trim();
+  if(!team){
+    input.style.borderColor='var(--c2)';
+    input.focus();
+    setTimeout(()=>{ input.style.borderColor=''; }, 1500);
+    return;
+  }
+  // カード引き画面のチーム名インジケーターを更新
+  const ind = document.getElementById('draw-team-indicator');
+  if(ind){ ind.textContent='チーム：'+team; ind.classList.add('show'); }
+  updateLimitBadge(team);
+  goTo('s-draw');
+}
+
 function goTo(id){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
   if(id==='s-gallery') renderGallery();
-  if(id==='s-draw') updateLimitBadge(document.getElementById('team-name').value.trim());
+  if(id==='s-draw'){
+    const team = document.getElementById('team-name').value.trim();
+    const ind = document.getElementById('draw-team-indicator');
+    if(ind && team){ ind.textContent='チーム：'+team; ind.classList.add('show'); }
+    updateLimitBadge(team);
+  }
   if(id!=='s-reveal'){ const dl=document.getElementById('btn-dl'); if(dl) dl.style.display='none'; }
 }
 
