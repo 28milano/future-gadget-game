@@ -904,7 +904,6 @@ function renderGallery(){
           <div class="gallery-gadget-name">${esc(g.name)}</div>
         </div>
         <div class="gallery-card-img"><img src="data:${g.imgMime};base64,${g.imgB64}" alt="${esc(g.name)}" loading="lazy"></div>
-        ${g.desc ? `<div class="gallery-card-desc">${esc(g.desc)}</div>` : ''}
         <div class="gallery-card-footer">
           <span class="pill-sm pill-sm-p">📍 ${esc(g.place)}</span>
           <span class="pill-sm pill-sm-pe">👤 ${esc(g.person)}</span>
@@ -937,7 +936,6 @@ function startScreenMode(){
           <div class="screen-card-name">${esc(g.name)}</div>
         </div>
         <div class="screen-card-img"><img src="data:${g.imgMime};base64,${g.imgB64}" alt="${esc(g.name)}" loading="lazy"></div>
-        ${g.desc ? `<div class="screen-card-desc">${esc(g.desc)}</div>` : ''}
         <div class="screen-card-pills">
           <span class="pill-sm pill-sm-p">📍 ${esc(g.place)}</span>
           <span class="pill-sm pill-sm-pe">👤 ${esc(g.person)}</span>
