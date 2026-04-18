@@ -75,8 +75,7 @@ input.entry-team-name:-webkit-autofill,input.entry-team-name:-webkit-autofill:ho
 /* ── DRAW ── */
 #s-draw{background:var(--bg);justify-content:space-evenly;gap:0;padding-top:52px;padding-bottom:24px;}
 .draw-head{text-align:center;width:100%;}
-.draw-head-title{font-size:clamp(20px,5.5vw,28px);font-weight:700;letter-spacing:-0.5px;line-height:1.2;margin-bottom:6px;}
-.draw-head-title .y{color:var(--c3);}
+.draw-head-title{font-size:clamp(20px,5.5vw,28px);font-weight:700;letter-spacing:-0.5px;line-height:1.2;margin-bottom:0;}
 .draw-head-sub{font-size:13px;color:rgba(238,238,248,0.6);letter-spacing:0.3px;}
 .logo-badge{display:none;font-family:'DotGothic16',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--c1);border:1px solid rgba(0,229,255,0.35);padding:5px 16px;margin-bottom:16px;}
 .draw-title{font-size:clamp(20px,4vw,40px);font-weight:900;letter-spacing:-1px;line-height:1.1;text-align:center;margin-bottom:6px;}
@@ -168,8 +167,9 @@ input.team-name:-webkit-autofill:focus{
 .btn-purple:hover::before,.btn-purple:active::before{transform:scaleX(1);}
 .btn-purple:hover,.btn-purple:active{color:#fff;}.btn-purple span{position:relative;z-index:1;}
 .btn-purple:disabled{opacity:.4;cursor:not-allowed;}
-.btn-ghost{font-family:'Noto Sans JP',sans-serif;font-size:12px;padding:9px;border-radius:60px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;transition:all .2s;width:100%;text-align:center;}
-.btn-ghost:hover,.btn-ghost:active{border-color:var(--c2);color:var(--c2);}
+.btn-ghost{font-family:'Noto Sans JP',sans-serif;font-size:12px;padding:9px;border-radius:60px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;transition:opacity .2s;width:100%;text-align:center;}
+.btn-ghost:active{opacity:.6;}
+@media(hover:hover){.btn-ghost:hover{border-color:rgba(255,255,255,.25);color:rgba(238,238,248,.7);}}
 .btn-pink{font-family:'Noto Sans JP',sans-serif;font-size:14px;font-weight:700;padding:11px;border-radius:60px;border:2px solid var(--c2);background:transparent;color:var(--c2);cursor:pointer;transition:all .2s;position:relative;overflow:hidden;width:100%;text-align:center;}
 .btn-pink::before{content:'';position:absolute;inset:0;background:var(--c2);transform:scaleX(0);transform-origin:left;transition:transform .2s;z-index:0;}
 .btn-pink:hover::before,.btn-pink:active::before{transform:scaleX(1);}
@@ -385,8 +385,7 @@ body.screen-mode #s-screen{display:flex;}
   <div class="draw-team-indicator" id="draw-team-indicator" onclick="goTo('s-entry')" title="タップでチーム名を変更"></div>
   <div class="limit-badge" id="limit-badge" style="display:none;"></div>
   <div class="draw-head">
-    <h2 class="draw-head-title">🃏 <span class="y">カード</span>を引いて組み合わせを決めよう！</h2>
-    <p class="draw-head-sub">3枚のカードで今日のシーンを決めよう</p>
+    <h2 class="draw-head-title">🃏 カードを引いて組み合わせを決めよう！</h2>
   </div>
   <div class="card-row">
     <div class="card place" id="card-place">
