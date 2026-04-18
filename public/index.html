@@ -73,7 +73,11 @@ input.entry-team-name:-webkit-autofill,input.entry-team-name:-webkit-autofill:ho
 .draw-team-indicator.show{display:block;}
 
 /* ── DRAW ── */
-#s-draw{background:var(--bg);justify-content:center;gap:10px;}
+#s-draw{background:var(--bg);justify-content:space-evenly;gap:0;padding-top:52px;padding-bottom:24px;}
+.draw-head{text-align:center;width:100%;}
+.draw-head-title{font-size:clamp(20px,5.5vw,28px);font-weight:700;letter-spacing:-0.5px;line-height:1.2;margin-bottom:6px;}
+.draw-head-title .y{color:var(--c3);}
+.draw-head-sub{font-size:13px;color:rgba(238,238,248,0.6);letter-spacing:0.3px;}
 .logo-badge{display:none;font-family:'DotGothic16',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--c1);border:1px solid rgba(0,229,255,0.35);padding:5px 16px;margin-bottom:16px;}
 .draw-title{font-size:clamp(20px,4vw,40px);font-weight:900;letter-spacing:-1px;line-height:1.1;text-align:center;margin-bottom:6px;}
 .draw-title .y{color:var(--c3);}.draw-title .b{color:var(--c1);}
@@ -269,6 +273,9 @@ body.screen-mode #s-screen{display:flex;}
 /* ── デスクトップ拡張（640px以上） ── */
 @media(min-width:640px){
   .screen{padding:20px 48px;justify-content:center;}
+  #s-draw{justify-content:center;gap:20px;padding-top:20px;padding-bottom:20px;}
+  .draw-head-title{font-size:clamp(22px,4vw,36px);}
+  .draw-head-sub{font-size:14px;}
   #s-entry{gap:clamp(40px,8vh,100px);padding-top:60px;padding-bottom:56px;}
   .entry-top{gap:16px;}
   .entry-bottom{gap:20px;}
@@ -364,7 +371,11 @@ body.screen-mode #s-screen{display:flex;}
 <div class="screen" id="s-draw">
   <div class="logo-badge">STT PUBDAY ／ SOCIAL PROBLEM SOLVING GAME</div>
   <div class="draw-team-indicator" id="draw-team-indicator" onclick="goTo('s-entry')" title="タップでチーム名を変更"></div>
-  <div class="limit-badge" id="limit-badge">チーム名を入力してください</div>
+  <div class="limit-badge" id="limit-badge" style="display:none;"></div>
+  <div class="draw-head">
+    <h2 class="draw-head-title">🃏 <span class="y">カード</span>を引こう！</h2>
+    <p class="draw-head-sub">3枚のカードで今日のシーンを決めよう</p>
+  </div>
   <div class="card-row">
     <div class="card place" id="card-place">
       <div class="card-header">
