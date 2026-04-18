@@ -100,7 +100,7 @@ input.team-name:-webkit-autofill:focus{
 .limit-badge.warn{color:var(--c2);background:rgba(255,75,110,.1);border-color:rgba(255,75,110,.3);}
 
 /* ── カード：TCGポートレートスタイル（スマホ3列コンパクト） ── */
-.card-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;width:100%;margin-bottom:0;}
+.card-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;width:100%;margin-bottom:0;perspective:600px;}
 .card{background:rgba(255,255,255,0.06);border:2px solid var(--border);border-radius:10px;padding:0;display:flex;flex-direction:column;align-items:stretch;gap:0;min-height:auto;position:relative;overflow:hidden;transition:all .4s cubic-bezier(.22,.68,0,1.2);}
 .card::after{display:none;}
 .card.place{border-color:rgba(0,229,255,.5);}
@@ -132,6 +132,19 @@ input.team-name:-webkit-autofill:focus{
 .card.drawn.issue{border-color:rgba(255,230,0,.75);box-shadow:0 0 24px rgba(255,230,0,.18),inset 0 0 30px rgba(255,230,0,.04);}
 @keyframes flipIn{from{transform:rotateY(80deg);opacity:0}to{transform:rotateY(0);opacity:1}}
 .card.drawn .card-val{animation:flipIn .4s ease both;}
+@keyframes shuffleOut{
+  0%  {transform:translateY(0) rotateY(0deg) scale(1);opacity:1;}
+  20% {transform:translateY(-10px) rotateY(25deg) scale(0.96);}
+  100%{transform:translateY(6px) rotateY(90deg) scale(0.88);opacity:0;}
+}
+@keyframes shuffleIn{
+  0%  {transform:translateY(6px) rotateY(-90deg) scale(0.88);opacity:0;}
+  55% {transform:translateY(-5px) rotateY(6deg) scale(1.03);opacity:1;}
+  75% {transform:translateY(0) rotateY(-2deg) scale(0.99);}
+  100%{transform:translateY(0) rotateY(0deg) scale(1);}
+}
+.card.shuffling-out{animation:shuffleOut .3s ease forwards;}
+.card.shuffling-in{animation:shuffleIn .45s cubic-bezier(.22,.68,0,1.2) forwards;}
 
 /* ボタンエリア：スマホ縦積み・横いっぱい */
 .draw-btns{display:flex;flex-direction:column;align-items:stretch;gap:8px;width:100%;}
@@ -688,15 +701,46 @@ async function drawCards(){
     ['card-person','val-person','person',PERSONS],
     ['card-issue','val-issue','issue',ISSUES],
   ];
+
+  const isRedraw = document.getElementById('card-place').classList.contains('drawn');
+
+  if(isRedraw){
+    // シャッフルアウト：3枚を少しずらして一気にめくる
+    pairs.forEach(([cId],i)=>{
+      const card = document.getElementById(cId);
+      card.style.animationDelay = `${i*50}ms`;
+      card.classList.add('shuffling-out');
+    });
+    await delay(430);
+    // リセット（裏向き状態）
+    pairs.forEach(([cId,vId])=>{
+      const card = document.getElementById(cId);
+      card.classList.remove('shuffling-out','drawn');
+      card.style.animationDelay = '';
+      const el = document.getElementById(vId);
+      el.textContent = 'カードを引く';
+      el.classList.add('empty');
+    });
+    await delay(40);
+  }
+
+  // シャッフルイン：1枚ずつ順番にめくれる
   for(let i=0;i<pairs.length;i++){
-    await delay(i*220);
+    await delay(i*180);
     const [cId,vId,key,arr] = pairs[i];
     const val = arr[Math.floor(Math.random()*arr.length)];
     current[key] = val;
     const el = document.getElementById(vId);
-    el.textContent=val; el.classList.remove('empty');
-    document.getElementById(cId).classList.add('drawn');
+    el.textContent = val;
+    el.classList.remove('empty');
+    const card = document.getElementById(cId);
+    card.classList.add('drawn');
+    if(isRedraw){
+      card.classList.add('shuffling-in');
+      setTimeout(()=>card.classList.remove('shuffling-in'), 500);
+    }
   }
+
   btn.disabled=false;
   btn.querySelector('span').textContent='🎲 別の組み合わせを引く';
   document.getElementById('btn-proceed').classList.add('show');
