@@ -539,6 +539,7 @@ async function drawCards(){
   btn.disabled=false;
   btn.querySelector('span').textContent='🎲 別の組み合わせを引く';
   document.getElementById('btn-proceed').classList.add('show');
+  document.querySelector('.draw-redraw-hint').style.display='none';
 }
 
 function resetDraw(){
@@ -549,6 +550,7 @@ function resetDraw(){
   });
   document.getElementById('btn-draw').querySelector('span').textContent='🃏 カードを引く';
   document.getElementById('btn-proceed').classList.remove('show');
+  document.querySelector('.draw-redraw-hint').style.display='';
   current={place:'',person:'',issue:''};
 }
 
