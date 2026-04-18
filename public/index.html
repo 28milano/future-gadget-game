@@ -66,11 +66,9 @@ input.entry-team-name:-webkit-autofill,input.entry-team-name:-webkit-autofill:ho
 .btn-start:hover::before,.btn-start:active::before{transform:scaleX(1);}
 .btn-start:hover,.btn-start:active{color:#000;}
 .btn-start span{position:relative;z-index:1;}
-/* draw-team-indicator: チーム名表示（クリックで変更可能） */
-.draw-team-indicator{font-family:'DotGothic16',monospace;font-size:11px;letter-spacing:2px;color:rgba(238,238,248,0.6);background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);padding:5px 16px;border-radius:20px;margin-bottom:10px;display:none;cursor:pointer;transition:all .2s;}
-.draw-team-indicator:hover{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.2);}
+/* draw-team-indicator: チーム名表示（枠なしプレーンテキスト） */
+.draw-team-indicator{font-family:'DotGothic16',monospace;font-size:11px;letter-spacing:2px;color:rgba(238,238,248,0.45);margin-bottom:10px;display:none;}
 .draw-team-indicator.show{display:inline-block;}
-.draw-team-indicator .team-change{color:var(--muted);font-size:9px;margin-left:6px;}
 
 /* ── DRAW ── */
 #s-draw{background:var(--bg);}
@@ -647,7 +645,7 @@ function startGame(){
   }
   // カード引き画面のチーム名インジケーターを更新
   const ind = document.getElementById('draw-team-indicator');
-  if(ind){ ind.innerHTML='チーム：<strong>'+team+'</strong><span class="team-change">← 変更</span>'; ind.classList.add('show'); }
+  if(ind){ ind.textContent='チーム：'+team; ind.classList.add('show'); }
   updateLimitBadge(team);
   goTo('s-draw');
 }
@@ -659,7 +657,7 @@ function goTo(id){
   if(id==='s-draw'){
     const team = document.getElementById('team-name').value.trim();
     const ind = document.getElementById('draw-team-indicator');
-    if(ind && team){ ind.innerHTML='チーム：<strong>'+team+'</strong><span class="team-change">← 変更</span>'; ind.classList.add('show'); }
+    if(ind && team){ ind.textContent='チーム：'+team; ind.classList.add('show'); }
     updateLimitBadge(team);
   }
   if(id!=='s-reveal'){ const dl=document.getElementById('btn-dl'); if(dl) dl.style.display='none'; }
