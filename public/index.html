@@ -230,9 +230,20 @@ body.screen-mode #s-screen{display:flex;}
   /* 生成回数バッジ：1行に収める */
   .limit-badge{font-size:10px;letter-spacing:1px;padding:4px 12px;white-space:nowrap;}
 
+  /* 引き直しヒント：1行に収める */
+  .draw-redraw-hint{font-size:11px;white-space:nowrap;letter-spacing:0.5px;}
+
   /* ボタンエリア：縦積み・横いっぱい */
   .draw-btns{flex-direction:column;align-items:stretch;gap:10px;}
   .btn-primary,.btn-cyan,.btn-ghost,.btn-pink,.btn-purple{width:100%;text-align:center;}
+
+  /* シナリオバー・ピルを小さく */
+  .scenario-bar{padding:10px 14px;gap:6px;}
+  .pill{font-size:12px;padding:5px 10px;gap:4px;}
+  .pill-arr{font-size:12px;}
+
+  /* 入力画面タイトル：1行に収める */
+  .input-head h2{font-size:15px;white-space:nowrap;}
 
   /* ギャラリー */
   .gallery-grid{grid-template-columns:1fr;}
@@ -458,8 +469,7 @@ async function initTeamMode(){
       currentSession = id;
       const galleryLabel = document.getElementById('gallery-session-label');
       if(galleryLabel) galleryLabel.textContent = 'SESSION: ' + name;
-      const drawLabel = document.getElementById('draw-session-label');
-      if(drawLabel){ drawLabel.textContent = 'SESSION: ' + name; drawLabel.style.display='inline-block'; }
+      // draw-session-label は非表示（参加者には不要）
       updateLimitBadge(document.getElementById('team-name')?.value.trim() || '');
       // ギャラリーを表示中なら即座に再レンダリング
       if(document.getElementById('s-gallery').classList.contains('active')) renderGallery();
@@ -481,8 +491,7 @@ async function initTeamSessionFallback(){
   const sessName = sessions.length ? (sessions[0][1].name||sessions[0][0]) : 'default';
   const galleryLabel = document.getElementById('gallery-session-label');
   if(galleryLabel) galleryLabel.textContent = 'SESSION: ' + sessName;
-  const drawLabel = document.getElementById('draw-session-label');
-  if(drawLabel){ drawLabel.textContent = 'SESSION: ' + sessName; drawLabel.style.display='inline-block'; }
+  // draw-session-label は非表示（参加者には不要）
   updateLimitBadge('');
 }
 
