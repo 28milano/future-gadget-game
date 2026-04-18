@@ -53,14 +53,14 @@ body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(
 .entry-top{display:flex;flex-direction:column;align-items:center;gap:10px;width:100%;}
 .entry-bottom{display:flex;flex-direction:column;align-items:center;gap:16px;width:100%;max-width:440px;}
 .entry-logomark{width:72px;height:72px;display:block;filter:drop-shadow(0 0 18px rgba(0,229,255,0.2));}
-.entry-eyebrow{font-family:'DotGothic16',monospace;font-size:9px;letter-spacing:2px;color:var(--c1);border:1px solid rgba(0,229,255,.3);padding:4px 14px;text-transform:uppercase;text-align:center;}
+.entry-eyebrow{position:absolute;top:0;left:0;right:0;font-family:'DotGothic16',monospace;font-size:9px;letter-spacing:3px;color:rgba(238,238,248,0.55);background:rgba(255,255,255,.04);border-bottom:1px solid rgba(255,255,255,.08);padding:11px 16px;text-transform:uppercase;text-align:center;}
 .entry-title{font-size:clamp(28px,8vw,48px);font-weight:700;letter-spacing:-1px;line-height:1.05;text-align:center;}
 .entry-title .y{color:var(--c3);}.entry-title .b{color:var(--c1);}
 .entry-sub{color:rgba(238,238,248,0.65);font-size:13px;letter-spacing:0.3px;text-align:center;line-height:1.7;max-width:420px;}
 .entry-input-area{width:100%;display:flex;flex-direction:column;gap:10px;}
-.entry-input-label{font-family:'DotGothic16',monospace;font-size:11px;letter-spacing:3px;color:var(--c4);text-transform:uppercase;}
+.entry-input-label{font-family:'DotGothic16',monospace;font-size:11px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;}
 input.entry-team-name{background:var(--card-bg);border:2px solid var(--border);border-radius:10px;color:var(--text);font-family:'Noto Sans JP',sans-serif;font-size:20px;font-weight:400;padding:12px 16px;outline:none;width:100%;transition:border-color .2s;}
-input.entry-team-name:focus{border-color:var(--c4);}
+input.entry-team-name:focus{border-color:rgba(255,255,255,.4);}
 input.entry-team-name::placeholder{color:var(--muted);font-weight:400;font-size:15px;}
 input.entry-team-name:-webkit-autofill,input.entry-team-name:-webkit-autofill:hover,input.entry-team-name:-webkit-autofill:focus{-webkit-box-shadow:0 0 0px 1000px var(--card-bg) inset;-webkit-text-fill-color:var(--text);caret-color:var(--text);border-color:var(--c4);transition:background-color 9999s ease-in-out 0s;}
 .btn-start{font-family:'Noto Sans JP',sans-serif;font-size:17px;font-weight:900;padding:15px 0;border-radius:60px;border:2px solid var(--c3);background:transparent;color:var(--c3);cursor:pointer;letter-spacing:2px;transition:all .2s;position:relative;overflow:hidden;width:100%;}
@@ -336,17 +336,17 @@ body.screen-mode #s-screen{display:flex;}
 
 <!-- SCREEN 0: ENTRY -->
 <div class="screen active" id="s-entry">
+  <div class="entry-eyebrow">STT PUBDAY 2026 ／ SOCIAL PROBLEM SOLVING GAME</div>
   <div class="entry-top">
-    <div class="entry-eyebrow">STT PUBDAY 2026 ／ SOCIAL PROBLEM SOLVING GAME</div>
     <!-- SVGロゴマーク：3枚のカードを広げ、前面カードに電球 -->
     <svg class="entry-logomark" viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
       <!-- 奥のカード（黄） -->
       <rect x="6" y="18" width="52" height="66" rx="7"
             fill="rgba(255,230,0,0.07)" stroke="rgba(255,230,0,0.55)" stroke-width="1.4"
             transform="rotate(14 32 51)"/>
-      <!-- 左のカード（ピンク） -->
+      <!-- 左のカード（白） -->
       <rect x="38" y="18" width="52" height="66" rx="7"
-            fill="rgba(255,75,110,0.07)" stroke="rgba(255,75,110,0.55)" stroke-width="1.4"
+            fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.35)" stroke-width="1.4"
             transform="rotate(-14 64 51)"/>
       <!-- 前面のカード（シアン） -->
       <rect x="22" y="12" width="52" height="68" rx="7"
