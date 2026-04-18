@@ -48,24 +48,29 @@ body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(
 @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 
 /* ── ENTRY ── */
-#s-entry{background:var(--bg);gap:0;}
-.entry-eyebrow{font-family:'DotGothic16',monospace;font-size:10px;letter-spacing:4px;color:var(--c1);border:1px solid rgba(0,229,255,.3);padding:5px 18px;margin-bottom:36px;text-transform:uppercase;text-align:center;}
-.entry-title{font-size:clamp(28px,6vw,56px);font-weight:900;letter-spacing:-2px;line-height:1.05;text-align:center;margin-bottom:14px;}
+#s-entry{background:var(--bg);justify-content:space-between;padding-top:80px;padding-bottom:64px;}
+.entry-top{display:flex;flex-direction:column;align-items:center;gap:16px;width:100%;}
+.entry-bottom{display:flex;flex-direction:column;align-items:center;gap:20px;width:100%;max-width:440px;}
+.entry-eyebrow{font-family:'DotGothic16',monospace;font-size:10px;letter-spacing:4px;color:var(--c1);border:1px solid rgba(0,229,255,.3);padding:5px 18px;text-transform:uppercase;text-align:center;}
+.entry-title{font-size:clamp(32px,7vw,64px);font-weight:900;letter-spacing:-2px;line-height:1.05;text-align:center;}
 .entry-title .y{color:var(--c3);}.entry-title .b{color:var(--c1);}
-.entry-sub{color:rgba(238,238,248,0.65);font-size:14px;letter-spacing:0.5px;text-align:center;margin-bottom:48px;line-height:1.8;max-width:420px;}
-.entry-input-area{width:100%;max-width:440px;display:flex;flex-direction:column;gap:10px;margin-bottom:24px;}
+.entry-sub{color:rgba(238,238,248,0.65);font-size:14px;letter-spacing:0.5px;text-align:center;line-height:1.9;max-width:420px;}
+.entry-input-area{width:100%;display:flex;flex-direction:column;gap:10px;}
 .entry-input-label{font-family:'DotGothic16',monospace;font-size:11px;letter-spacing:3px;color:var(--c4);text-transform:uppercase;}
 input.entry-team-name{background:var(--card-bg);border:2px solid var(--border);border-radius:10px;color:var(--text);font-family:'Noto Sans JP',sans-serif;font-size:22px;font-weight:900;padding:14px 20px;outline:none;width:100%;transition:border-color .2s;}
 input.entry-team-name:focus{border-color:var(--c4);}
 input.entry-team-name::placeholder{color:var(--muted);font-weight:400;font-size:16px;}
 input.entry-team-name:-webkit-autofill,input.entry-team-name:-webkit-autofill:hover,input.entry-team-name:-webkit-autofill:focus{-webkit-box-shadow:0 0 0px 1000px var(--card-bg) inset;-webkit-text-fill-color:var(--text);caret-color:var(--text);border-color:var(--c4);transition:background-color 9999s ease-in-out 0s;}
-.btn-start{font-family:'Noto Sans JP',sans-serif;font-size:18px;font-weight:900;padding:16px 0;border-radius:60px;border:2px solid var(--c3);background:transparent;color:var(--c3);cursor:pointer;letter-spacing:2px;transition:all .2s;position:relative;overflow:hidden;width:100%;max-width:440px;}
+.btn-start{font-family:'Noto Sans JP',sans-serif;font-size:18px;font-weight:900;padding:16px 0;border-radius:60px;border:2px solid var(--c3);background:transparent;color:var(--c3);cursor:pointer;letter-spacing:2px;transition:all .2s;position:relative;overflow:hidden;width:100%;}
 .btn-start::before{content:'';position:absolute;inset:0;background:var(--c3);transform:scaleX(0);transform-origin:left;transition:transform .25s;z-index:0;}
 .btn-start:hover::before,.btn-start:active::before{transform:scaleX(1);}
 .btn-start:hover,.btn-start:active{color:#000;}
 .btn-start span{position:relative;z-index:1;}
-.draw-team-indicator{font-family:'DotGothic16',monospace;font-size:10px;letter-spacing:2px;color:var(--c4);background:rgba(162,89,255,.1);border:1px solid rgba(162,89,255,.3);padding:4px 14px;border-radius:20px;margin-bottom:14px;display:none;}
+/* draw-team-indicator: チーム名表示（クリックで変更可能） */
+.draw-team-indicator{font-family:'DotGothic16',monospace;font-size:11px;letter-spacing:2px;color:rgba(238,238,248,0.6);background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);padding:5px 16px;border-radius:20px;margin-bottom:10px;display:none;cursor:pointer;transition:all .2s;}
+.draw-team-indicator:hover{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.2);}
 .draw-team-indicator.show{display:inline-block;}
+.draw-team-indicator .team-change{color:var(--muted);font-size:9px;margin-left:6px;}
 
 /* ── DRAW ── */
 #s-draw{background:var(--bg);}
@@ -87,7 +92,7 @@ input.team-name:-webkit-autofill:focus{
   border-color:var(--c4);
   transition:background-color 9999s ease-in-out 0s;
 }
-.limit-badge{font-family:'DotGothic16',monospace;font-size:10px;letter-spacing:2px;color:var(--c4);background:rgba(162,89,255,.1);border:1px solid rgba(162,89,255,.3);padding:4px 16px;border-radius:20px;margin-bottom:20px;}
+.limit-badge{font-family:'DotGothic16',monospace;font-size:10px;letter-spacing:2px;color:var(--c1);background:rgba(0,229,255,.07);border:1px solid rgba(0,229,255,.25);padding:4px 16px;border-radius:20px;margin-bottom:20px;}
 .limit-badge.warn{color:var(--c2);background:rgba(255,75,110,.1);border-color:rgba(255,75,110,.3);}
 .card-row{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;width:100%;max-width:1200px;margin-bottom:24px;}
 .card{background:var(--card-bg);border:1px solid var(--border);border-radius:14px;padding:32px 24px 28px;display:flex;flex-direction:column;align-items:center;gap:14px;min-height:200px;justify-content:center;position:relative;overflow:hidden;transition:all .4s cubic-bezier(.22,.68,0,1.2);}
@@ -237,30 +242,35 @@ body.screen-mode #s-screen{display:flex;}
   /* 全体 */
   .screen{padding:20px 16px;}
 
-  /* エントリー画面 */
-  .entry-eyebrow{margin-bottom:24px;}
-  .entry-sub{margin-bottom:32px;font-size:13px;}
+  /* エントリー画面：上下パディングを画面サイズに合わせる */
+  #s-entry{padding-top:52px;padding-bottom:44px;}
+  .entry-top{gap:12px;}
+  .entry-bottom{gap:16px;}
+  .entry-eyebrow{font-size:9px;letter-spacing:2px;padding:4px 14px;}
+  .entry-title{font-size:clamp(30px,8vw,48px);}
+  .entry-sub{font-size:13px;line-height:1.7;}
   input.entry-team-name{font-size:18px;padding:12px 16px;}
   .btn-start{font-size:16px;}
 
   /* トップバッジ非表示 */
   .logo-badge{display:none;}
 
-  /* カード：縦積みに戻してコンパクトに */
-  .card-row{grid-template-columns:1fr;gap:10px;}
-  .card{min-height:72px;flex-direction:column;gap:6px;padding:14px 16px;justify-content:center;}
-  .card-type{font-size:11px;letter-spacing:1px;}
-  .card-emoji{font-size:26px;}
-  .card-val{font-size:18px;}
+  /* チームインジケーター・生成回数バッジ：マージン削減 */
+  .draw-team-indicator{margin-bottom:6px;font-size:10px;padding:4px 12px;}
+  .limit-badge{font-size:10px;letter-spacing:1px;padding:4px 12px;white-space:nowrap;margin-bottom:10px;}
 
-  /* 生成回数バッジ：1行に収める */
-  .limit-badge{font-size:10px;letter-spacing:1px;padding:4px 12px;white-space:nowrap;}
+  /* カード：横並び・コンパクトにしてスクロールなしで収める */
+  .card-row{grid-template-columns:1fr;gap:7px;margin-bottom:12px;}
+  .card{min-height:58px;flex-direction:row;gap:10px;padding:10px 14px;justify-content:flex-start;align-items:center;}
+  .card-type{font-size:10px;letter-spacing:0.5px;width:56px;flex-shrink:0;text-align:center;}
+  .card-emoji{font-size:22px;flex-shrink:0;}
+  .card-val{font-size:14px;text-align:left;}
 
   /* 引き直しヒント：1行に収める */
-  .draw-redraw-hint{font-size:11px;white-space:nowrap;letter-spacing:0.5px;}
+  .draw-redraw-hint{font-size:11px;white-space:nowrap;letter-spacing:0.5px;margin-bottom:8px;}
 
   /* ボタンエリア：縦積み・横いっぱい */
-  .draw-btns{flex-direction:column;align-items:stretch;gap:10px;}
+  .draw-btns{flex-direction:column;align-items:stretch;gap:8px;}
   .btn-primary,.btn-cyan,.btn-ghost,.btn-pink,.btn-purple{width:100%;text-align:center;}
 
   /* シナリオバー・ピルを小さく */
@@ -283,20 +293,24 @@ body.screen-mode #s-screen{display:flex;}
 
 <!-- SCREEN 0: ENTRY -->
 <div class="screen active" id="s-entry">
-  <div class="entry-eyebrow">STT PUBDAY 2026 ／ SOCIAL PROBLEM SOLVING GAME</div>
-  <h1 class="entry-title">未来の社会課題<br><span class="y">先行解決</span><span class="b">ゲーム</span></h1>
-  <p class="entry-sub">3枚のカードが示すシーンを想像して、<br>お悩みを解決するグッズを考えよう！</p>
-  <div class="entry-input-area">
-    <div class="entry-input-label">チーム名</div>
-    <input class="entry-team-name" id="team-name" type="text" placeholder="例：チームA" autocomplete="off">
+  <div class="entry-top">
+    <div class="entry-eyebrow">STT PUBDAY 2026 ／ SOCIAL PROBLEM SOLVING GAME</div>
+    <h1 class="entry-title">未来の社会課題<br><span class="y">先行解決</span><span class="b">ゲーム</span></h1>
+    <p class="entry-sub">3枚のカードが示すシーンを想像して、<br>お悩みを解決するグッズを考えよう！</p>
   </div>
-  <button class="btn-start" onclick="startGame()"><span>▶ ゲームスタート</span></button>
+  <div class="entry-bottom">
+    <div class="entry-input-area">
+      <div class="entry-input-label">チーム名</div>
+      <input class="entry-team-name" id="team-name" type="text" placeholder="例：チームA" autocomplete="off">
+    </div>
+    <button class="btn-start" onclick="startGame()"><span>▶ ゲームスタート</span></button>
+  </div>
 </div>
 
 <!-- SCREEN 1: DRAW -->
 <div class="screen" id="s-draw">
   <div class="logo-badge">STT PUBDAY ／ SOCIAL PROBLEM SOLVING GAME</div>
-  <div class="draw-team-indicator" id="draw-team-indicator"></div>
+  <div class="draw-team-indicator" id="draw-team-indicator" onclick="goTo('s-entry')" title="タップでチーム名を変更"></div>
   <div class="limit-badge" id="limit-badge">チーム名を入力してください</div>
   <div class="card-row">
     <div class="card place" id="card-place">
@@ -320,7 +334,6 @@ body.screen-mode #s-screen{display:flex;}
   <div class="draw-btns">
     <button class="btn-primary" id="btn-draw" onclick="drawCards()"><span>🃏 カードを引く</span></button>
     <button class="btn-ghost" onclick="resetDraw()">✕ クリア</button>
-    <button class="btn-ghost" onclick="goTo('s-entry')">← チームを変更</button>
     <div id="btn-proceed">
       <button class="btn-cyan" onclick="goToInput()"><span>💡 このシーンのお悩み解決グッズを考える →</span></button>
     </div>
@@ -332,7 +345,7 @@ body.screen-mode #s-screen{display:flex;}
   <div class="scenario-bar" id="scenario-bar"></div>
   <div class="input-head">
     <h2>💡 お悩み解決グッズアイデアを入力しよう！</h2>
-    <p>名前と説明を入力すると、AIがイラストを生成します（1チーム3回まで）</p>
+    <p>名前と説明を入力すると、AIがイラストを生成します<br>（1チーム3回まで）</p>
   </div>
   <div class="input-wrap">
     <div class="field-label">お悩み解決グッズ名</div>
@@ -634,7 +647,7 @@ function startGame(){
   }
   // カード引き画面のチーム名インジケーターを更新
   const ind = document.getElementById('draw-team-indicator');
-  if(ind){ ind.textContent='チーム：'+team; ind.classList.add('show'); }
+  if(ind){ ind.innerHTML='チーム：<strong>'+team+'</strong><span class="team-change">← 変更</span>'; ind.classList.add('show'); }
   updateLimitBadge(team);
   goTo('s-draw');
 }
@@ -646,7 +659,7 @@ function goTo(id){
   if(id==='s-draw'){
     const team = document.getElementById('team-name').value.trim();
     const ind = document.getElementById('draw-team-indicator');
-    if(ind && team){ ind.textContent='チーム：'+team; ind.classList.add('show'); }
+    if(ind && team){ ind.innerHTML='チーム：<strong>'+team+'</strong><span class="team-change">← 変更</span>'; ind.classList.add('show'); }
     updateLimitBadge(team);
   }
   if(id!=='s-reveal'){ const dl=document.getElementById('btn-dl'); if(dl) dl.style.display='none'; }
