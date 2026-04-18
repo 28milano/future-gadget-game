@@ -44,12 +44,12 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--text
 body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(0,229,255,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(0,229,255,0.02) 1px,transparent 1px);background-size:44px 44px;pointer-events:none;z-index:0;}
 
 /* ── SCREEN BASE（スマホファースト） ── */
-.screen{position:fixed;inset:0;z-index:10;display:none;flex-direction:column;align-items:center;justify-content:flex-start;padding:52px 14px 28px;overflow-y:auto;-webkit-overflow-scrolling:touch;}
+.screen{position:fixed;inset:0;z-index:10;display:none;flex-direction:column;align-items:center;justify-content:flex-start;padding:70px 14px 28px;overflow-y:auto;-webkit-overflow-scrolling:touch;}
 .screen.active{display:flex;animation:fadeIn .35s ease;}
 @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 
 /* ── ENTRY ── */
-#s-entry{background:var(--bg);justify-content:center;gap:clamp(24px,5vh,52px);padding-top:44px;padding-bottom:36px;}
+#s-entry{background:var(--bg);justify-content:center;gap:clamp(24px,5vh,52px);padding-top:70px;padding-bottom:36px;}
 .entry-top{display:flex;flex-direction:column;align-items:center;gap:10px;width:100%;}
 .entry-bottom{display:flex;flex-direction:column;align-items:center;gap:16px;width:100%;max-width:440px;}
 .entry-logomark{width:72px;height:72px;display:block;filter:drop-shadow(0 0 18px rgba(0,229,255,0.2));}
@@ -70,11 +70,11 @@ input.entry-team-name:-webkit-autofill,input.entry-team-name:-webkit-autofill:ho
 .btn-start:hover,.btn-start:active{color:#000;}
 .btn-start span{position:relative;z-index:1;}
 /* draw-team-indicator: 画面左上に固定表示 */
-.draw-team-indicator{position:absolute;top:14px;left:18px;z-index:5;font-family:'DotGothic16',monospace;font-size:10px;letter-spacing:2px;color:rgba(238,238,248,0.38);display:none;cursor:pointer;}
+.draw-team-indicator{position:absolute;top:46px;left:18px;z-index:5;font-family:'DotGothic16',monospace;font-size:10px;letter-spacing:2px;color:rgba(238,238,248,0.38);display:none;cursor:pointer;}
 .draw-team-indicator.show{display:block;}
 
 /* ── DRAW ── */
-#s-draw{background:var(--bg);justify-content:space-evenly;gap:0;padding-top:52px;padding-bottom:24px;}
+#s-draw{background:var(--bg);justify-content:space-evenly;gap:0;padding-top:70px;padding-bottom:24px;}
 .draw-head{text-align:center;width:100%;}
 .draw-head-title{font-size:clamp(20px,5.5vw,28px);font-weight:700;letter-spacing:-0.5px;line-height:1.2;margin-bottom:0;}
 .draw-head-sub{font-size:13px;color:rgba(238,238,248,0.6);letter-spacing:0.3px;}
@@ -461,7 +461,7 @@ body.screen-mode #s-screen{display:flex;}
 
 <!-- SCREEN 3: REVEAL -->
 <div class="screen" id="s-reveal">
-  <div class="draw-team-indicator show" id="reveal-team" style="position:absolute;top:14px;left:18px;font-family:'DotGothic16',monospace;font-size:10px;letter-spacing:2px;color:rgba(238,238,248,0.38);"></div>
+  <div class="draw-team-indicator show" id="reveal-team" style="position:absolute;top:46px;left:18px;font-family:'DotGothic16',monospace;font-size:10px;letter-spacing:2px;color:rgba(238,238,248,0.38);"></div>
   <div class="reveal-gadget-name" id="reveal-name">—</div>
   <div class="reveal-pills" id="reveal-pills"></div>
   <div class="img-wrap" id="img-wrap">
