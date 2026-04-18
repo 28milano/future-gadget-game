@@ -138,6 +138,10 @@ input.txt::placeholder,textarea.txt::placeholder{color:var(--muted);font-weight:
 .loading-ring{width:44px;height:44px;border:3px solid var(--border);border-top-color:var(--c4);border-radius:50%;animation:spin .8s linear infinite;}
 @keyframes spin{to{transform:rotate(360deg)}}
 .loading-txt{font-family:'DotGothic16',monospace;font-size:11px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;text-align:center;line-height:1.8;}
+.loading-label{font-family:'DotGothic16',monospace;font-size:12px;letter-spacing:2px;color:var(--c4);text-align:center;margin-bottom:18px;min-height:1.5em;transition:opacity .3s;}
+.loading-bar-wrap{width:260px;height:5px;background:var(--border);border-radius:3px;overflow:hidden;}
+.loading-bar{height:100%;width:0%;background:linear-gradient(90deg,var(--c4),var(--c1));border-radius:3px;transition:width .15s linear;}
+.loading-pct{font-family:'DotGothic16',monospace;font-size:11px;letter-spacing:3px;color:var(--muted);margin-top:12px;text-align:center;}
 .reveal-btns{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;}
 
 /* ── GALLERY ── */
@@ -587,7 +591,7 @@ async function generateCard(){
     <span class="pill pill-i">⚡ ${current.issue}</span>`;
 
   const wrap = document.getElementById('img-wrap');
-  wrap.innerHTML=`<div class="loading-wrap"><div class="loading-ring"></div><div class="loading-txt">NANO BANANA<br>DRAWING...</div></div>`;
+  startLoadingAnimation(wrap);
   goTo('s-reveal');
   document.getElementById('btn-gen').disabled  = true;
   document.getElementById('btn-save').disabled = true;
@@ -647,13 +651,16 @@ async function generateCard(){
     if(imgP){
       currentImgB64 = imgP.inlineData.data;
       currentMime   = imgP.inlineData.mimeType;
-      wrap.innerHTML=`<img src="data:${currentMime};base64,${currentImgB64}" alt="${esc(name)}">`;
-      document.getElementById('btn-dl').style.display = 'inline-block';
+      finishLoadingAnimation(()=>{
+        wrap.innerHTML=`<img src="data:${currentMime};base64,${currentImgB64}" alt="${esc(name)}">`;
+        document.getElementById('btn-dl').style.display = 'inline-block';
+      });
     } else {
       throw new Error('画像データが返ってきませんでした');
     }
   }catch(e){
     console.error('Nano Banana error:',e);
+    stopLoadingAnimation();
     wrap.innerHTML=`<div class="loading-wrap"><div class="loading-txt" style="color:var(--c2)">⚠ 生成に失敗しました<br><span style="font-size:9px;opacity:.7">${esc(e.message)}</span></div></div>`;
   }
 
@@ -764,6 +771,57 @@ function startScreenMode(){
 }
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// LOADING ANIMATION
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+let _loadingTimer = null;
+
+const LOADING_STEPS = [
+  { pct:  0, msg: 'シーンを分析中...' },
+  { pct: 18, msg: 'グッズのかたちを考えています...' },
+  { pct: 40, msg: 'カラーとデザインを決定中...' },
+  { pct: 65, msg: 'イラストを描いています...' },
+  { pct: 85, msg: '仕上げをしています...' },
+];
+
+function startLoadingAnimation(wrapEl){
+  clearInterval(_loadingTimer);
+  wrapEl.innerHTML = `
+    <div class="loading-wrap">
+      <div class="loading-label" id="ld-msg">シーンを分析中...</div>
+      <div class="loading-bar-wrap"><div class="loading-bar" id="ld-bar"></div></div>
+      <div class="loading-pct" id="ld-pct">0%</div>
+    </div>`;
+  let pct = 0;
+  _loadingTimer = setInterval(()=>{
+    const speed = pct < 60 ? 1.2 : pct < 82 ? 0.4 : 0.08;
+    pct = Math.min(pct + speed, 92);
+    const bar   = document.getElementById('ld-bar');
+    const pctEl = document.getElementById('ld-pct');
+    const msgEl = document.getElementById('ld-msg');
+    if(!bar){ clearInterval(_loadingTimer); return; }
+    bar.style.width = pct + '%';
+    pctEl.textContent = Math.floor(pct) + '%';
+    const step = [...LOADING_STEPS].reverse().find(s => s.pct <= pct);
+    if(step && msgEl.textContent !== step.msg) msgEl.textContent = step.msg;
+  }, 50);
+}
+
+function finishLoadingAnimation(onDone){
+  clearInterval(_loadingTimer);
+  const bar   = document.getElementById('ld-bar');
+  const pctEl = document.getElementById('ld-pct');
+  const msgEl = document.getElementById('ld-msg');
+  if(bar){ bar.style.transition = 'width .4s ease'; bar.style.width = '100%'; }
+  if(pctEl) pctEl.textContent = '100%';
+  if(msgEl) msgEl.textContent = '完成！';
+  setTimeout(onDone, 450);
+}
+
+function stopLoadingAnimation(){
+  clearInterval(_loadingTimer);
+}
+
 // UTILS
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
