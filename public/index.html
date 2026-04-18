@@ -385,7 +385,7 @@ body.screen-mode #s-screen{display:flex;}
   <div class="draw-team-indicator" id="draw-team-indicator" onclick="goTo('s-entry')" title="タップでチーム名を変更"></div>
   <div class="limit-badge" id="limit-badge" style="display:none;"></div>
   <div class="draw-head">
-    <h2 class="draw-head-title">🃏 <span class="y">カード</span>を引こう！</h2>
+    <h2 class="draw-head-title">🃏 <span class="y">カード</span>を引いて組み合わせを決めよう！</h2>
     <p class="draw-head-sub">3枚のカードで今日のシーンを決めよう</p>
   </div>
   <div class="card-row">
@@ -701,54 +701,29 @@ async function drawCards(){
     ['card-issue','val-issue','issue',ISSUES],
   ];
 
-  const isRedraw = document.getElementById('card-place').classList.contains('drawn');
+  // Phase1: 3枚同時に2回転
+  pairs.forEach(([cId])=>{
+    const card = document.getElementById(cId);
+    card.classList.remove('drawn','revealing');
+    void card.offsetWidth;
+    card.classList.add('shuffling');
+  });
+  await delay(700);
 
-  if(isRedraw){
-    // Phase1: 3枚同時に2回転
-    pairs.forEach(([cId])=>{
-      document.getElementById(cId).classList.add('shuffling');
-    });
-    await delay(700); // 2回転完了まで待つ
-
-    // スピン終了・値をリセット
-    pairs.forEach(([cId,vId])=>{
-      const card = document.getElementById(cId);
-      card.classList.remove('shuffling','drawn');
-      void card.offsetWidth;
-      const el = document.getElementById(vId);
-      el.textContent = 'カードを引く';
-      el.classList.add('empty');
-    });
-    await delay(30);
-
-    // Phase2: 1枚ずつ新しい値でめくれて登場
-    for(let i=0;i<pairs.length;i++){
-      await delay(i*160);
-      const [cId,vId,key,arr] = pairs[i];
-      const val = arr[Math.floor(Math.random()*arr.length)];
-      current[key] = val;
-      const el = document.getElementById(vId);
-      el.textContent = val;
-      el.classList.remove('empty');
-      const card = document.getElementById(cId);
-      void card.offsetWidth;
-      card.classList.add('drawn','revealing');
-      setTimeout(()=>card.classList.remove('revealing'), 420);
-    }
-    await delay(3*160 + 420);
-  } else {
-    // 初回：1枚ずつ順番に登場
-    for(let i=0;i<pairs.length;i++){
-      await delay(i*220);
-      const [cId,vId,key,arr] = pairs[i];
-      const val = arr[Math.floor(Math.random()*arr.length)];
-      current[key] = val;
-      const el = document.getElementById(vId);
-      el.textContent = val;
-      el.classList.remove('empty');
-      document.getElementById(cId).classList.add('drawn');
-    }
-  }
+  // スピン終了・新しい値をセット
+  pairs.forEach(([cId,vId,key,arr])=>{
+    const card = document.getElementById(cId);
+    card.classList.remove('shuffling');
+    void card.offsetWidth;
+    const val = arr[Math.floor(Math.random()*arr.length)];
+    current[key] = val;
+    const el = document.getElementById(vId);
+    el.textContent = val;
+    el.classList.remove('empty');
+    // Phase2: 3枚同時にめくれて登場
+    card.classList.add('drawn','revealing');
+    setTimeout(()=>card.classList.remove('revealing'), 420);
+  });
 
   btn.disabled=false;
   btn.querySelector('span').textContent='🎲 別の組み合わせを引く';
