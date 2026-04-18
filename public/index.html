@@ -93,30 +93,37 @@ input.team-name:-webkit-autofill:focus{
 }
 .limit-badge{font-family:'DotGothic16',monospace;font-size:10px;letter-spacing:2px;color:var(--c1);background:rgba(0,229,255,.07);border:1px solid rgba(0,229,255,.25);padding:4px 16px;border-radius:20px;margin-bottom:20px;}
 .limit-badge.warn{color:var(--c2);background:rgba(255,75,110,.1);border-color:rgba(255,75,110,.3);}
-.card-row{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;width:100%;max-width:1200px;margin-bottom:24px;}
-/* ── カード：全画面でトランプ風（左帯＋右コンテンツ） ── */
-.card{border:1px solid var(--border);border-radius:6px;padding:0;display:flex;flex-direction:row;align-items:stretch;gap:0;min-height:160px;justify-content:flex-start;position:relative;overflow:hidden;transition:all .4s cubic-bezier(.22,.68,0,1.2);}
+.card-row{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;width:100%;max-width:1100px;margin-bottom:24px;}
+/* ── カード：TCGポートレートスタイル（ポケカ風） ── */
+.card{background:var(--card-bg);border:2px solid var(--border);border-radius:10px;padding:0;display:flex;flex-direction:column;align-items:stretch;gap:0;min-height:240px;position:relative;overflow:hidden;transition:all .4s cubic-bezier(.22,.68,0,1.2);}
 .card::after{display:none;}
-/* カード全体の背景はタイプ色でグラデ */
-.card.place{background:linear-gradient(100deg,rgba(0,229,255,.14) 0%,var(--card-bg) 38%);border-color:rgba(0,229,255,.28);}
-.card.person{background:linear-gradient(100deg,rgba(255,75,110,.14) 0%,var(--card-bg) 38%);border-color:rgba(255,75,110,.28);}
-.card.issue{background:linear-gradient(100deg,rgba(255,230,0,.14) 0%,var(--card-bg) 38%);border-color:rgba(255,230,0,.28);}
-/* 左帯（スーツエリア）*/
-.card-side{width:96px;flex-shrink:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:20px 0;border-radius:6px 0 0 6px;}
-.card.place .card-side{background:rgba(0,229,255,.22);border-right:1px solid rgba(0,229,255,.3);}
-.card.person .card-side{background:rgba(255,75,110,.22);border-right:1px solid rgba(255,75,110,.3);}
-.card.issue .card-side{background:rgba(255,230,0,.22);border-right:1px solid rgba(255,230,0,.3);}
-/* 右コンテンツ */
-.card-main{flex:1;display:flex;align-items:center;justify-content:center;padding:20px 28px;}
-/* 引いた後のグロー */
-.card.drawn.place{border-color:rgba(0,229,255,.6);box-shadow:0 0 28px rgba(0,229,255,.12);}
-.card.drawn.person{border-color:rgba(255,75,110,.6);box-shadow:0 0 28px rgba(255,75,110,.12);}
-.card.drawn.issue{border-color:rgba(255,230,0,.6);box-shadow:0 0 28px rgba(255,230,0,.12);}
-.card-type{font-family:'DotGothic16',monospace;font-size:11px;letter-spacing:1px;text-transform:uppercase;text-align:center;line-height:1.4;}
-.card.place .card-type{color:var(--c1);}.card.person .card-type{color:var(--c2);}.card.issue .card-type{color:var(--c3);}
-.card-emoji{font-size:34px;}
-.card-val{font-size:21px;font-weight:900;text-align:center;line-height:1.3;}
-.card-val.empty{font-size:13px;font-weight:400;color:#9090c4;}
+.card.place{border-color:rgba(0,229,255,.4);}
+.card.person{border-color:rgba(255,75,110,.4);}
+.card.issue{border-color:rgba(255,230,0,.4);}
+/* ヘッダーバー */
+.card-header{display:flex;align-items:center;justify-content:space-between;padding:8px 14px;flex-shrink:0;}
+.card.place .card-header{background:rgba(0,229,255,.2);border-bottom:1px solid rgba(0,229,255,.3);}
+.card.person .card-header{background:rgba(255,75,110,.2);border-bottom:1px solid rgba(255,75,110,.3);}
+.card.issue .card-header{background:rgba(255,230,0,.2);border-bottom:1px solid rgba(255,230,0,.3);}
+.card-cat-icon{font-size:14px;}
+.card-cat-name{font-family:'DotGothic16',monospace;font-size:11px;letter-spacing:2px;}
+.card.place .card-cat-name{color:var(--c1);}
+.card.person .card-cat-name{color:var(--c2);}
+.card.issue .card-cat-name{color:var(--c3);}
+/* イラストエリア */
+.card-img-area{flex:1;display:flex;align-items:center;justify-content:center;padding:20px 16px;}
+.card.place .card-img-area{background:linear-gradient(135deg,rgba(0,229,255,.12) 0%,rgba(0,229,255,.02) 100%);}
+.card.person .card-img-area{background:linear-gradient(135deg,rgba(255,75,110,.12) 0%,rgba(255,75,110,.02) 100%);}
+.card.issue .card-img-area{background:linear-gradient(135deg,rgba(255,230,0,.12) 0%,rgba(255,230,0,.02) 100%);}
+.card-emoji{font-size:52px;filter:drop-shadow(0 4px 14px rgba(0,0,0,.5));}
+/* テキストエリア（引いた値） */
+.card-body{padding:14px 16px;border-top:1px solid rgba(255,255,255,.07);min-height:70px;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.18);}
+.card-val{font-size:18px;font-weight:900;text-align:center;line-height:1.35;}
+.card-val.empty{font-size:12px;font-weight:400;color:#8080b8;letter-spacing:1px;}
+/* 引いた後：ホイル風グロー */
+.card.drawn.place{border-color:rgba(0,229,255,.75);box-shadow:0 0 36px rgba(0,229,255,.18),inset 0 0 40px rgba(0,229,255,.04);}
+.card.drawn.person{border-color:rgba(255,75,110,.75);box-shadow:0 0 36px rgba(255,75,110,.18),inset 0 0 40px rgba(255,75,110,.04);}
+.card.drawn.issue{border-color:rgba(255,230,0,.75);box-shadow:0 0 36px rgba(255,230,0,.18),inset 0 0 40px rgba(255,230,0,.04);}
 @keyframes flipIn{from{transform:rotateY(80deg);opacity:0}to{transform:rotateY(0);opacity:1}}
 .card.drawn .card-val{animation:flipIn .4s ease both;}
 .draw-btns{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center;}
@@ -270,15 +277,17 @@ body.screen-mode #s-screen{display:flex;}
   /* チーム名は左上絶対配置なのでマージン不要 */
   .limit-badge{font-size:10px;letter-spacing:1px;padding:4px 12px;white-space:nowrap;margin-bottom:10px;}
 
-  /* モバイル：カードをコンパクトに（スタイルはベースCSSで定義済み） */
+  /* モバイル：TCGカードをコンパクトに */
   .card-row{grid-template-columns:1fr;gap:8px;margin-bottom:14px;}
-  .card{min-height:72px;border-radius:6px;}
-  .card-side{width:62px;gap:5px;padding:10px 0;border-radius:6px 0 0 6px;}
-  .card-main{padding:12px 16px;justify-content:flex-start;}
-  .card-emoji{font-size:20px;}
-  .card-type{font-size:9px;letter-spacing:0;width:60px;padding:0 4px;}
-  .card-val{font-size:15px;text-align:left;}
-  .card-val.empty{font-size:12px;}
+  .card{min-height:auto;border-radius:8px;}
+  .card-header{padding:6px 12px;}
+  .card-cat-icon{font-size:12px;}
+  .card-cat-name{font-size:10px;letter-spacing:1px;}
+  .card-img-area{padding:14px 12px;min-height:72px;}
+  .card-emoji{font-size:36px;}
+  .card-body{min-height:48px;padding:10px 14px;}
+  .card-val{font-size:15px;}
+  .card-val.empty{font-size:11px;}
 
   /* 引き直しヒント：1行に収める */
   .draw-redraw-hint{font-size:11px;white-space:nowrap;letter-spacing:0.5px;margin-bottom:8px;}
@@ -357,29 +366,38 @@ body.screen-mode #s-screen{display:flex;}
   <div class="limit-badge" id="limit-badge">チーム名を入力してください</div>
   <div class="card-row">
     <div class="card place" id="card-place">
-      <div class="card-side">
-        <div class="card-emoji">🏙️</div>
-        <div class="card-type">📍 場所</div>
+      <div class="card-header">
+        <span class="card-cat-icon">📍</span>
+        <span class="card-cat-name">場所</span>
       </div>
-      <div class="card-main">
+      <div class="card-img-area">
+        <div class="card-emoji">🏙️</div>
+      </div>
+      <div class="card-body">
         <div class="card-val empty" id="val-place">カードを引く</div>
       </div>
     </div>
     <div class="card person" id="card-person">
-      <div class="card-side">
-        <div class="card-emoji">🧑</div>
-        <div class="card-type">👤 人</div>
+      <div class="card-header">
+        <span class="card-cat-icon">👤</span>
+        <span class="card-cat-name">人</span>
       </div>
-      <div class="card-main">
+      <div class="card-img-area">
+        <div class="card-emoji">🧑</div>
+      </div>
+      <div class="card-body">
         <div class="card-val empty" id="val-person">カードを引く</div>
       </div>
     </div>
     <div class="card issue" id="card-issue">
-      <div class="card-side">
-        <div class="card-emoji">💭</div>
-        <div class="card-type">⚡ 不便</div>
+      <div class="card-header">
+        <span class="card-cat-icon">⚡</span>
+        <span class="card-cat-name">不便・課題</span>
       </div>
-      <div class="card-main">
+      <div class="card-img-area">
+        <div class="card-emoji">💭</div>
+      </div>
+      <div class="card-body">
         <div class="card-val empty" id="val-issue">カードを引く</div>
       </div>
     </div>
