@@ -53,7 +53,8 @@ body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(
 .entry-top{display:flex;flex-direction:column;align-items:center;gap:10px;width:100%;}
 .entry-bottom{display:flex;flex-direction:column;align-items:center;gap:16px;width:100%;max-width:440px;}
 .entry-logomark{width:72px;height:72px;display:block;filter:drop-shadow(0 0 18px rgba(0,229,255,0.2));}
-.entry-eyebrow{position:absolute;top:0;left:0;right:0;font-family:'DotGothic16',monospace;font-size:9px;letter-spacing:3px;color:rgba(238,238,248,0.55);background:rgba(255,255,255,.04);border-bottom:1px solid rgba(255,255,255,.08);padding:11px 16px;text-transform:uppercase;text-align:center;}
+.top-banner{position:fixed;top:0;left:0;right:0;z-index:50;font-family:'DotGothic16',monospace;font-size:9px;letter-spacing:3px;color:rgba(238,238,248,0.5);background:rgba(10,12,22,0.92);border-bottom:1px solid rgba(255,255,255,.1);padding:13px 16px;text-transform:uppercase;text-align:center;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);}
+.entry-eyebrow{display:none;}
 .entry-title{font-size:clamp(28px,8vw,48px);font-weight:700;letter-spacing:-1px;line-height:1.05;text-align:center;}
 .entry-title .y{color:var(--c3);}.entry-title .b{color:var(--c1);}
 .entry-sub{color:rgba(238,238,248,0.65);font-size:13px;letter-spacing:0.3px;text-align:center;line-height:1.7;max-width:420px;}
@@ -333,6 +334,9 @@ body.screen-mode #s-screen{display:flex;}
 </style>
 </head>
 <body>
+
+<!-- 全ページ共通バナー -->
+<div class="top-banner">STT PUBDAY 2026 ／ SOCIAL PROBLEM SOLVING GAME</div>
 
 <!-- SCREEN 0: ENTRY -->
 <div class="screen active" id="s-entry">
