@@ -132,18 +132,18 @@ input.team-name:-webkit-autofill:focus{
 .card.drawn.issue{border-color:rgba(255,230,0,.75);box-shadow:0 0 24px rgba(255,230,0,.18),inset 0 0 30px rgba(255,230,0,.04);}
 @keyframes flipIn{from{transform:rotateY(80deg);opacity:0}to{transform:rotateY(0);opacity:1}}
 .card.drawn .card-val{animation:flipIn .4s ease both;}
-@keyframes shuffleOut{
+@keyframes shuffleSpin{
   0%  {transform:rotateY(0deg);}
-  100%{transform:rotateY(90deg);}
+  100%{transform:rotateY(720deg);}
 }
-@keyframes shuffleIn{
+@keyframes cardReveal{
   0%  {transform:rotateY(-90deg);}
   60% {transform:rotateY(5deg);}
   80% {transform:rotateY(-1deg);}
   100%{transform:rotateY(0deg);}
 }
-.card.shuffling-out{animation:shuffleOut .2s ease-in forwards;}
-.card.shuffling-in{animation:shuffleIn .36s cubic-bezier(.22,.68,0,1.2) forwards;}
+.card.shuffling{animation:shuffleSpin .65s ease-in-out forwards;}
+.card.revealing{animation:cardReveal .38s cubic-bezier(.22,.68,0,1.2) forwards;}
 
 /* ボタンエリア：スマホ縦積み・横いっぱい */
 .draw-btns{display:flex;flex-direction:column;align-items:stretch;gap:8px;width:100%;}
@@ -704,27 +704,38 @@ async function drawCards(){
   const isRedraw = document.getElementById('card-place').classList.contains('drawn');
 
   if(isRedraw){
-    // 各カードを独立して「out(0→90°) → 値差し替え → in(-90°→0)」で繋ぐ
-    const flipCard = async (cId, vId, key, arr, startDelay) => {
-      await delay(startDelay);
+    // Phase1: 3枚同時に2回転
+    pairs.forEach(([cId])=>{
+      document.getElementById(cId).classList.add('shuffling');
+    });
+    await delay(700); // 2回転完了まで待つ
+
+    // スピン終了・値をリセット
+    pairs.forEach(([cId,vId])=>{
       const card = document.getElementById(cId);
-      // 横回転で倒す
-      card.classList.add('shuffling-out');
-      await delay(210); // 90°に達する直前
-      // 端になった瞬間に値を差し替え
+      card.classList.remove('shuffling','drawn');
+      void card.offsetWidth;
+      const el = document.getElementById(vId);
+      el.textContent = 'カードを引く';
+      el.classList.add('empty');
+    });
+    await delay(30);
+
+    // Phase2: 1枚ずつ新しい値でめくれて登場
+    for(let i=0;i<pairs.length;i++){
+      await delay(i*160);
+      const [cId,vId,key,arr] = pairs[i];
       const val = arr[Math.floor(Math.random()*arr.length)];
       current[key] = val;
       const el = document.getElementById(vId);
       el.textContent = val;
       el.classList.remove('empty');
-      card.classList.remove('shuffling-out','drawn');
-      void card.offsetWidth; // reflow でアニメーションリセット
-      // 逆から回転して表示
-      card.classList.add('shuffling-in','drawn');
-      await delay(380);
-      card.classList.remove('shuffling-in');
-    };
-    await Promise.all(pairs.map(([cId,vId,key,arr],i) => flipCard(cId,vId,key,arr,i*160)));
+      const card = document.getElementById(cId);
+      void card.offsetWidth;
+      card.classList.add('drawn','revealing');
+      setTimeout(()=>card.classList.remove('revealing'), 420);
+    }
+    await delay(3*160 + 420);
   } else {
     // 初回：1枚ずつ順番に登場
     for(let i=0;i<pairs.length;i++){
