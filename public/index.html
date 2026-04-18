@@ -67,9 +67,9 @@ input.entry-team-name:-webkit-autofill,input.entry-team-name:-webkit-autofill:ho
 .btn-start:hover::before,.btn-start:active::before{transform:scaleX(1);}
 .btn-start:hover,.btn-start:active{color:#000;}
 .btn-start span{position:relative;z-index:1;}
-/* draw-team-indicator: チーム名表示（枠なしプレーンテキスト） */
-.draw-team-indicator{font-family:'DotGothic16',monospace;font-size:11px;letter-spacing:2px;color:rgba(238,238,248,0.45);margin-bottom:10px;display:none;}
-.draw-team-indicator.show{display:inline-block;}
+/* draw-team-indicator: 画面左上に固定表示 */
+.draw-team-indicator{position:absolute;top:14px;left:18px;z-index:5;font-family:'DotGothic16',monospace;font-size:10px;letter-spacing:2px;color:rgba(238,238,248,0.38);display:none;cursor:pointer;}
+.draw-team-indicator.show{display:block;}
 
 /* ── DRAW ── */
 #s-draw{background:var(--bg);}
@@ -105,6 +105,9 @@ input.team-name:-webkit-autofill:focus{
 .card-emoji{font-size:36px;}
 .card-val{font-size:22px;font-weight:900;text-align:center;line-height:1.25;min-height:24px;}
 .card-val.empty{font-size:14px;font-weight:400;color:#9090c4;}
+/* desktop: card-side/card-main はフル幅の縦積み */
+.card-side{display:flex;flex-direction:column;align-items:center;gap:12px;width:100%;}
+.card-main{display:flex;align-items:center;justify-content:center;width:100%;}
 @keyframes flipIn{from{transform:rotateY(80deg);opacity:0}to{transform:rotateY(0);opacity:1}}
 .card.drawn .card-val{animation:flipIn .4s ease both;}
 .draw-btns{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center;}
@@ -255,16 +258,35 @@ body.screen-mode #s-screen{display:flex;}
   /* トップバッジ非表示 */
   .logo-badge{display:none;}
 
-  /* チームインジケーター・生成回数バッジ：マージン削減 */
-  .draw-team-indicator{margin-bottom:6px;font-size:10px;padding:4px 12px;}
+  /* チーム名は左上絶対配置なのでマージン不要 */
   .limit-badge{font-size:10px;letter-spacing:1px;padding:4px 12px;white-space:nowrap;margin-bottom:10px;}
 
-  /* カード：横並び・コンパクトにしてスクロールなしで収める */
-  .card-row{grid-template-columns:1fr;gap:7px;margin-bottom:12px;}
-  .card{min-height:58px;flex-direction:row;gap:10px;padding:10px 14px;justify-content:flex-start;align-items:center;}
-  .card-type{font-size:10px;letter-spacing:0.5px;width:56px;flex-shrink:0;text-align:center;}
-  .card-emoji{font-size:22px;flex-shrink:0;}
-  .card-val{font-size:14px;text-align:left;}
+  /* ── トランプ風カード（左帯＋右コンテンツ）── */
+  .card-row{grid-template-columns:1fr;gap:8px;margin-bottom:14px;}
+  .card{
+    flex-direction:row;padding:0;min-height:76px;border-radius:12px;
+    align-items:stretch;gap:0;justify-content:flex-start;
+    transform:none !important; /* drawn時のtranslateYを無効化 */
+  }
+  /* 左帯（スーツエリア）*/
+  .card-side{
+    width:62px;flex-shrink:0;flex-direction:column;
+    align-items:center;justify-content:center;gap:5px;
+    padding:10px 0;border-radius:12px 0 0 12px;
+    border-right:1px solid rgba(255,255,255,.06);
+  }
+  .card.place  .card-side{background:rgba(0,229,255,.11);}
+  .card.person .card-side{background:rgba(255,75,110,.11);}
+  .card.issue  .card-side{background:rgba(255,230,0,.11);}
+  /* 右コンテンツエリア */
+  .card-main{flex:1;display:flex;align-items:center;padding:14px 18px;}
+  /* 上部ストライプを非表示（左帯で代替）*/
+  .card::after{display:none;}
+  /* 各要素サイズ調整 */
+  .card-emoji{font-size:20px;}
+  .card-type{font-size:9px;letter-spacing:0;text-align:center;width:60px;padding:0 4px;line-height:1.3;}
+  .card-val{font-size:16px;font-weight:900;text-align:left;min-height:auto;}
+  .card-val.empty{font-size:13px;}
 
   /* 引き直しヒント：1行に収める */
   .draw-redraw-hint{font-size:11px;white-space:nowrap;letter-spacing:0.5px;margin-bottom:8px;}
@@ -343,19 +365,31 @@ body.screen-mode #s-screen{display:flex;}
   <div class="limit-badge" id="limit-badge">チーム名を入力してください</div>
   <div class="card-row">
     <div class="card place" id="card-place">
-      <div class="card-type">📍 場所</div>
-      <div class="card-emoji">🏙️</div>
-      <div class="card-val empty" id="val-place">カードを引く</div>
+      <div class="card-side">
+        <div class="card-emoji">🏙️</div>
+        <div class="card-type">📍 場所</div>
+      </div>
+      <div class="card-main">
+        <div class="card-val empty" id="val-place">カードを引く</div>
+      </div>
     </div>
     <div class="card person" id="card-person">
-      <div class="card-type">👤 人</div>
-      <div class="card-emoji">🧑</div>
-      <div class="card-val empty" id="val-person">カードを引く</div>
+      <div class="card-side">
+        <div class="card-emoji">🧑</div>
+        <div class="card-type">👤 人</div>
+      </div>
+      <div class="card-main">
+        <div class="card-val empty" id="val-person">カードを引く</div>
+      </div>
     </div>
     <div class="card issue" id="card-issue">
-      <div class="card-type">⚡ 不便・課題</div>
-      <div class="card-emoji">💭</div>
-      <div class="card-val empty" id="val-issue">カードを引く</div>
+      <div class="card-side">
+        <div class="card-emoji">💭</div>
+        <div class="card-type">⚡ 不便</div>
+      </div>
+      <div class="card-main">
+        <div class="card-val empty" id="val-issue">カードを引く</div>
+      </div>
     </div>
   </div>
   <p class="draw-redraw-hint">気に入る組み合わせになるまで、何度でも引き直してOK！🔄</p>
