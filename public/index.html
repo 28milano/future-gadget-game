@@ -85,7 +85,7 @@ input.team-name:-webkit-autofill:focus{
 .card.drawn .card-val{animation:flipIn .4s ease both;}
 .draw-btns{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center;}
 #btn-proceed{display:none;}#btn-proceed.show{display:inline-flex;}
-.draw-hint{font-size:13px;color:var(--c1);opacity:.85;letter-spacing:.5px;max-width:680px;text-align:center;line-height:1.7;}
+.draw-hint{font-size:13px;color:rgba(238,238,248,0.72);letter-spacing:2px;max-width:680px;text-align:center;line-height:1.7;margin-bottom:16px;}
 .draw-redraw-hint{font-size:12px;color:rgba(238,238,248,0.5);letter-spacing:1.5px;text-align:center;margin-bottom:12px;}
 
 /* ── BUTTONS ── */
@@ -252,7 +252,7 @@ body.screen-mode #s-screen{display:flex;}
     </div>
   </div>
   <p class="draw-redraw-hint">気に入る組み合わせになるまで、何度でも引き直してOK！🔄</p>
-  <p class="draw-hint" id="draw-hint-txt" style="display:none;">💬 チームで話し合おう：このシーンの背景を膨らませて、どんなお悩みが生まれているか想像してみよう</p>
+  <p class="draw-hint" id="draw-hint-txt" style="display:none;">このシーンの背景を膨らませ、どんなお悩みが生まれているか、チームで想像してみよう</p>
   <div class="draw-btns">
     <button class="btn-primary" id="btn-draw" onclick="drawCards()"><span>🃏 カードを引く</span></button>
     <button class="btn-ghost" onclick="resetDraw()">✕ クリア</button>
