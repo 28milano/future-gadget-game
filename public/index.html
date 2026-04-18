@@ -86,6 +86,7 @@ input.team-name:-webkit-autofill:focus{
 .draw-btns{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center;}
 #btn-proceed{display:none;text-align:center;}#btn-proceed.show{display:flex;flex-direction:column;align-items:center;gap:10px;}
 .draw-hint{font-size:13px;color:var(--c1);opacity:.85;letter-spacing:.5px;}
+.draw-redraw-hint{font-size:12px;color:rgba(238,238,248,0.5);letter-spacing:1.5px;text-align:center;margin-bottom:12px;}
 
 /* ── BUTTONS ── */
 .btn-primary{font-family:'Noto Sans JP',sans-serif;font-size:15px;font-weight:700;padding:12px 44px;border-radius:60px;border:2px solid var(--c3);background:transparent;color:var(--c3);cursor:pointer;letter-spacing:1.5px;transition:all .2s;position:relative;overflow:hidden;}
@@ -250,9 +251,10 @@ body.screen-mode #s-screen{display:flex;}
       <div class="card-val empty" id="val-issue">カードを引く</div>
     </div>
   </div>
+  <p class="draw-redraw-hint">気に入る組み合わせになるまで、何度でも引き直してOK！🔄</p>
   <div class="draw-btns">
     <button class="btn-primary" id="btn-draw" onclick="drawCards()"><span>🃏 カードを引く</span></button>
-    <button class="btn-ghost" onclick="resetDraw()">引き直す</button>
+    <button class="btn-ghost" onclick="resetDraw()">✕ クリア</button>
     <div id="btn-proceed">
       <p class="draw-hint">↑ この3つの組み合わせで困っている人を救うグッズを考えよう！</p>
       <button class="btn-cyan" onclick="goToInput()"><span>💡 このシーンのお悩み解決グッズを考える →</span></button>
@@ -490,11 +492,11 @@ async function updateLimitBadge(team){
   const cnt = await getCount(team);
   const rem = MAX_GEN - cnt;
   if(rem <= 0){
-    badge.textContent=`⚠️ ${team} の生成上限（${MAX_GEN}回）に達しました`;
+    badge.textContent=`⚠️ ${team} のイラスト生成上限（${MAX_GEN}回）に達しました`;
     badge.className='limit-badge warn';
     document.getElementById('btn-draw').disabled = true;
   } else {
-    badge.textContent=`${team}：残り生成回数 ${rem} / ${MAX_GEN}`;
+    badge.textContent=`🎨 イラスト生成 残り ${rem} / ${MAX_GEN} 回（カード引きは無制限）`;
     badge.className = rem===1 ? 'limit-badge warn' : 'limit-badge';
     document.getElementById('btn-draw').disabled = false;
   }
@@ -535,7 +537,7 @@ async function drawCards(){
     document.getElementById(cId).classList.add('drawn');
   }
   btn.disabled=false;
-  btn.querySelector('span').textContent='🎲 引き直す';
+  btn.querySelector('span').textContent='🎲 別の組み合わせを引く';
   document.getElementById('btn-proceed').classList.add('show');
 }
 
