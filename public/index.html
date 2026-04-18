@@ -84,7 +84,7 @@ input.team-name:-webkit-autofill:focus{
 @keyframes flipIn{from{transform:rotateY(80deg);opacity:0}to{transform:rotateY(0);opacity:1}}
 .card.drawn .card-val{animation:flipIn .4s ease both;}
 .draw-btns{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center;}
-#btn-proceed{display:none;text-align:center;}#btn-proceed.show{display:flex;flex-direction:column;align-items:center;gap:10px;}
+#btn-proceed{display:none;}#btn-proceed.show{display:inline-flex;}
 .draw-hint{font-size:13px;color:var(--c1);opacity:.85;letter-spacing:.5px;}
 .draw-redraw-hint{font-size:12px;color:rgba(238,238,248,0.5);letter-spacing:1.5px;text-align:center;margin-bottom:12px;}
 
@@ -252,11 +252,11 @@ body.screen-mode #s-screen{display:flex;}
     </div>
   </div>
   <p class="draw-redraw-hint">気に入る組み合わせになるまで、何度でも引き直してOK！🔄</p>
+  <p class="draw-hint" id="draw-hint-txt" style="display:none;">↑ この3つの組み合わせで困っている人を救うグッズを考えよう！</p>
   <div class="draw-btns">
     <button class="btn-primary" id="btn-draw" onclick="drawCards()"><span>🃏 カードを引く</span></button>
     <button class="btn-ghost" onclick="resetDraw()">✕ クリア</button>
     <div id="btn-proceed">
-      <p class="draw-hint">↑ この3つの組み合わせで困っている人を救うグッズを考えよう！</p>
       <button class="btn-cyan" onclick="goToInput()"><span>💡 このシーンのお悩み解決グッズを考える →</span></button>
     </div>
   </div>
@@ -539,6 +539,7 @@ async function drawCards(){
   btn.disabled=false;
   btn.querySelector('span').textContent='🎲 別の組み合わせを引く';
   document.getElementById('btn-proceed').classList.add('show');
+  document.getElementById('draw-hint-txt').style.display='block';
   document.querySelector('.draw-redraw-hint').style.display='none';
 }
 
@@ -550,6 +551,7 @@ function resetDraw(){
   });
   document.getElementById('btn-draw').querySelector('span').textContent='🃏 カードを引く';
   document.getElementById('btn-proceed').classList.remove('show');
+  document.getElementById('draw-hint-txt').style.display='none';
   document.querySelector('.draw-redraw-hint').style.display='';
   current={place:'',person:'',issue:''};
 }
