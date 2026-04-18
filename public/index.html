@@ -147,6 +147,13 @@ input.team-name:-webkit-autofill:focus{
 
 /* ボタンエリア：スマホ縦積み・横いっぱい */
 .draw-btns{display:flex;flex-direction:column;align-items:stretch;gap:8px;width:100%;}
+/* drawボタン個別カラー（カードの色と被らないよう上書き） */
+#s-draw .btn-primary{border-color:rgba(255,255,255,.45);color:rgba(255,255,255,.85);}
+#s-draw .btn-primary::before{background:rgba(255,255,255,.12);}
+#s-draw .btn-primary:hover,#s-draw .btn-primary:active{color:#fff;}
+#s-draw .btn-cyan{border-color:var(--c4);color:var(--c4);}
+#s-draw .btn-cyan::before{background:var(--c4);}
+#s-draw .btn-cyan:hover,#s-draw .btn-cyan:active{color:#fff;}
 #btn-proceed{display:none;}
 #btn-proceed.show{display:flex;width:100%;}
 #btn-proceed.show .btn-cyan{width:100%;}
