@@ -94,20 +94,25 @@ input.team-name:-webkit-autofill:focus{
 .limit-badge{font-family:'DotGothic16',monospace;font-size:10px;letter-spacing:2px;color:var(--c1);background:rgba(0,229,255,.07);border:1px solid rgba(0,229,255,.25);padding:4px 16px;border-radius:20px;margin-bottom:20px;}
 .limit-badge.warn{color:var(--c2);background:rgba(255,75,110,.1);border-color:rgba(255,75,110,.3);}
 .card-row{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;width:100%;max-width:1200px;margin-bottom:24px;}
-.card{background:var(--card-bg);border:1px solid var(--border);border-radius:14px;padding:32px 24px 28px;display:flex;flex-direction:column;align-items:center;gap:14px;min-height:200px;justify-content:center;position:relative;overflow:hidden;transition:all .4s cubic-bezier(.22,.68,0,1.2);}
-.card::after{content:'';position:absolute;top:0;left:0;right:0;height:3px;}
-.card.place::after{background:var(--c1);}.card.person::after{background:var(--c2);}.card.issue::after{background:var(--c3);}
-.card.drawn.place{border-color:rgba(0,229,255,.45);box-shadow:0 0 24px rgba(0,229,255,.08);transform:translateY(-3px);}
-.card.drawn.person{border-color:rgba(255,75,110,.45);box-shadow:0 0 24px rgba(255,75,110,.08);transform:translateY(-3px);}
-.card.drawn.issue{border-color:rgba(255,230,0,.45);box-shadow:0 0 24px rgba(255,230,0,.08);transform:translateY(-3px);}
-.card-type{font-family:'DotGothic16',monospace;font-size:13px;letter-spacing:2px;text-transform:uppercase;}
+/* ── カード：全画面でトランプ風（左帯＋右コンテンツ） ── */
+.card{background:var(--card-bg);border:1px solid var(--border);border-radius:14px;padding:0;display:flex;flex-direction:row;align-items:stretch;gap:0;min-height:160px;justify-content:flex-start;position:relative;overflow:hidden;transition:all .4s cubic-bezier(.22,.68,0,1.2);}
+.card::after{display:none;}
+/* 左帯（スーツエリア）*/
+.card-side{width:96px;flex-shrink:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:20px 0;border-radius:14px 0 0 14px;}
+.card.place .card-side{background:rgba(0,229,255,.1);border-right:1px solid rgba(0,229,255,.18);}
+.card.person .card-side{background:rgba(255,75,110,.1);border-right:1px solid rgba(255,75,110,.18);}
+.card.issue .card-side{background:rgba(255,230,0,.1);border-right:1px solid rgba(255,230,0,.18);}
+/* 右コンテンツ */
+.card-main{flex:1;display:flex;align-items:center;justify-content:center;padding:20px 28px;}
+/* 引いた後のグロー */
+.card.drawn.place{border-color:rgba(0,229,255,.45);box-shadow:0 0 28px rgba(0,229,255,.1);}
+.card.drawn.person{border-color:rgba(255,75,110,.45);box-shadow:0 0 28px rgba(255,75,110,.1);}
+.card.drawn.issue{border-color:rgba(255,230,0,.45);box-shadow:0 0 28px rgba(255,230,0,.1);}
+.card-type{font-family:'DotGothic16',monospace;font-size:11px;letter-spacing:1px;text-transform:uppercase;text-align:center;line-height:1.4;}
 .card.place .card-type{color:var(--c1);}.card.person .card-type{color:var(--c2);}.card.issue .card-type{color:var(--c3);}
-.card-emoji{font-size:36px;}
-.card-val{font-size:22px;font-weight:900;text-align:center;line-height:1.25;min-height:24px;}
-.card-val.empty{font-size:14px;font-weight:400;color:#9090c4;}
-/* desktop: card-side/card-main はフル幅の縦積み */
-.card-side{display:flex;flex-direction:column;align-items:center;gap:12px;width:100%;}
-.card-main{display:flex;align-items:center;justify-content:center;width:100%;}
+.card-emoji{font-size:34px;}
+.card-val{font-size:21px;font-weight:900;text-align:center;line-height:1.3;}
+.card-val.empty{font-size:13px;font-weight:400;color:#9090c4;}
 @keyframes flipIn{from{transform:rotateY(80deg);opacity:0}to{transform:rotateY(0);opacity:1}}
 .card.drawn .card-val{animation:flipIn .4s ease both;}
 .draw-btns{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center;}
@@ -261,32 +266,15 @@ body.screen-mode #s-screen{display:flex;}
   /* チーム名は左上絶対配置なのでマージン不要 */
   .limit-badge{font-size:10px;letter-spacing:1px;padding:4px 12px;white-space:nowrap;margin-bottom:10px;}
 
-  /* ── トランプ風カード（左帯＋右コンテンツ）── */
+  /* モバイル：カードをコンパクトに（スタイルはベースCSSで定義済み） */
   .card-row{grid-template-columns:1fr;gap:8px;margin-bottom:14px;}
-  .card{
-    flex-direction:row;padding:0;min-height:76px;border-radius:12px;
-    align-items:stretch;gap:0;justify-content:flex-start;
-    transform:none !important; /* drawn時のtranslateYを無効化 */
-  }
-  /* 左帯（スーツエリア）*/
-  .card-side{
-    width:62px;flex-shrink:0;flex-direction:column;
-    align-items:center;justify-content:center;gap:5px;
-    padding:10px 0;border-radius:12px 0 0 12px;
-    border-right:1px solid rgba(255,255,255,.06);
-  }
-  .card.place  .card-side{background:rgba(0,229,255,.11);}
-  .card.person .card-side{background:rgba(255,75,110,.11);}
-  .card.issue  .card-side{background:rgba(255,230,0,.11);}
-  /* 右コンテンツエリア */
-  .card-main{flex:1;display:flex;align-items:center;padding:14px 18px;}
-  /* 上部ストライプを非表示（左帯で代替）*/
-  .card::after{display:none;}
-  /* 各要素サイズ調整 */
+  .card{min-height:72px;border-radius:12px;}
+  .card-side{width:62px;gap:5px;padding:10px 0;border-radius:12px 0 0 12px;}
+  .card-main{padding:12px 16px;justify-content:flex-start;}
   .card-emoji{font-size:20px;}
-  .card-type{font-size:9px;letter-spacing:0;text-align:center;width:60px;padding:0 4px;line-height:1.3;}
-  .card-val{font-size:16px;font-weight:900;text-align:left;min-height:auto;}
-  .card-val.empty{font-size:13px;}
+  .card-type{font-size:9px;letter-spacing:0;width:60px;padding:0 4px;}
+  .card-val{font-size:15px;text-align:left;}
+  .card-val.empty{font-size:12px;}
 
   /* 引き直しヒント：1行に収める */
   .draw-redraw-hint{font-size:11px;white-space:nowrap;letter-spacing:0.5px;margin-bottom:8px;}
