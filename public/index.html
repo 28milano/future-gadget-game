@@ -133,18 +133,19 @@ input.team-name:-webkit-autofill:focus{
 @keyframes flipIn{from{transform:rotateY(80deg);opacity:0}to{transform:rotateY(0);opacity:1}}
 .card.drawn .card-val{animation:flipIn .4s ease both;}
 @keyframes shuffleOut{
-  0%  {transform:translateY(0) rotateY(0deg) scale(1);opacity:1;}
-  20% {transform:translateY(-10px) rotateY(25deg) scale(0.96);}
-  100%{transform:translateY(6px) rotateY(90deg) scale(0.88);opacity:0;}
+  0%  {transform:scale(1) rotate(0deg);opacity:1;}
+  30% {transform:scale(0.9) rotate(30deg);opacity:0.7;}
+  100%{transform:scale(0.2) rotate(220deg);opacity:0;}
 }
 @keyframes shuffleIn{
-  0%  {transform:translateY(6px) rotateY(-90deg) scale(0.88);opacity:0;}
-  55% {transform:translateY(-5px) rotateY(6deg) scale(1.03);opacity:1;}
-  75% {transform:translateY(0) rotateY(-2deg) scale(0.99);}
-  100%{transform:translateY(0) rotateY(0deg) scale(1);}
+  0%  {transform:scale(0.2) rotate(-360deg);opacity:0;}
+  60% {transform:scale(1.07) rotate(6deg);opacity:1;}
+  78% {transform:scale(0.96) rotate(-2deg);}
+  90% {transform:scale(1.01) rotate(1deg);}
+  100%{transform:scale(1) rotate(0deg);}
 }
-.card.shuffling-out{animation:shuffleOut .3s ease forwards;}
-.card.shuffling-in{animation:shuffleIn .45s cubic-bezier(.22,.68,0,1.2) forwards;}
+.card.shuffling-out{animation:shuffleOut .28s ease-in forwards;}
+.card.shuffling-in{animation:shuffleIn .5s cubic-bezier(.22,.68,0,1.2) forwards;}
 
 /* ボタンエリア：スマホ縦積み・横いっぱい */
 .draw-btns{display:flex;flex-direction:column;align-items:stretch;gap:8px;width:100%;}
@@ -708,10 +709,10 @@ async function drawCards(){
     // シャッフルアウト：3枚を少しずらして一気にめくる
     pairs.forEach(([cId],i)=>{
       const card = document.getElementById(cId);
-      card.style.animationDelay = `${i*50}ms`;
+      card.style.animationDelay = `${i*60}ms`;
       card.classList.add('shuffling-out');
     });
-    await delay(430);
+    await delay(480);
     // リセット（裏向き状態）
     pairs.forEach(([cId,vId])=>{
       const card = document.getElementById(cId);
@@ -737,7 +738,7 @@ async function drawCards(){
     card.classList.add('drawn');
     if(isRedraw){
       card.classList.add('shuffling-in');
-      setTimeout(()=>card.classList.remove('shuffling-in'), 500);
+      setTimeout(()=>card.classList.remove('shuffling-in'), 550);
     }
   }
 
